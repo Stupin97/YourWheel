@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>YourWheel.Host</name>
+    </assembly>
+    <members>
+        <member name="T:YourWheel.Host.Extensions.ExceptionMiddlewareExtension">
+            <summary>
+            Расширение для ExceptionMiddleware.
+            </summary>
+        </member>
+        <member name="T:YourWheel.Host.Extensions.HttpContextExtension">
+            <summary>
+              Расширения для HttpContext
+            </summary>
+        </member>
+        <member name="T:YourWheel.Host.Middlewares.ExceptionMiddleware">
+            <summary>
+            Middleware для логирования и обработки ошибок.
+            </summary>
+        </member>
+        <member name="T:YourWheel.Host.Middlewares.HandleJwtInHeaderMiddleware">
+            <summary>
+              Middleware для переноса Jwt из кук в header запроса
+            </summary>
+        </member>
+    </members>
+</doc>

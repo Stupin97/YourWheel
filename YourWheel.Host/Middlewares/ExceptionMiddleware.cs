@@ -9,14 +9,10 @@
     /// </summary>
     public class ExceptionMiddleware
     {
-        public readonly ILogger _logger;
-
         public readonly RequestDelegate _next;
 
-        public ExceptionMiddleware(RequestDelegate next, ILogger logger)
+        public ExceptionMiddleware(RequestDelegate next)
         {
-            _logger = logger;
-
             _next = next;
         }
 

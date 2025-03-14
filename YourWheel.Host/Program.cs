@@ -1,12 +1,43 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+
 using System.Reflection;
+
+using YourWheel.Domain;
 using YourWheel.Host.Extensions;
+using YourWheel.Host.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var authSettings = new AuthenticationSettings(builder.Configuration);
+
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddDbContext<YourWheelDbContext>(options =>
+    options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING_POSTGRES")));
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = true;
+        options.TokenValidationParameters = authSettings.JwtValidationParameters;
+    });
+
+// https://andrewlock.net/custom-authorisation-policies-and-requirements-in-asp-net-core/
+// Позже разрешить доступ и неавторизованным пользователям на этапе разработки, чтобы постоянно не авторизовываться!!!
+// Разобраться лучше, суть:
+// 1. в конфиг добавить сво-во true - значит атворизация обязательна
+// 2. options.DefaultPolicy = добавить политику с обработкой сво-ва из 1.
+builder.Services.AddAuthorization();
+
+builder.Services.AddControllers();
+
+builder.Services.AddSingleton<IAuthenticationSettings>(authSettings);
+
+builder.Services.AddScoped<IJwtService, JwtService>();
+
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -24,9 +55,9 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlFile = "documentationSwagger.xml";
 
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    var xmlPath = Path.Combine(Environment.CurrentDirectory, xmlFile);
 
     c.IncludeXmlComments(xmlPath);
 });
@@ -45,7 +76,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseSwagger();
 
-app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rem API v1"); });
+app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "YourWheel API v1"); });
 
 app.UseHttpsRedirection();
 
@@ -62,10 +93,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseHandleJwtInHeaderMiddleware(); // ОСТАНОВИЛСЯ на переносе Jwt в header 
+app.UseHandleJwtInHeaderMiddleware();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
-
-app.MapRazorPages();
 
 app.Run();

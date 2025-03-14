@@ -7,7 +7,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5110"
+      "applicationUrl": "http://localhost:5000"
     },
     "https": {
       "commandName": "Project",
@@ -16,11 +16,12 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7124;http://localhost:5110"
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
     },
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
+      "launchBrowser": false,
+      "launchUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -35,6 +36,20 @@
       },
       "publishAllPorts": true,
       "useSSL": true
+    },
+    "YourWheel.Host": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "http://localhost:5000",
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB_CONNECTION_STRING_POSTGRES": "Host=localhost;Port=5432;Database=YourWheel;Username=postgres;Password=11111",
+        "JWT_ISSUER": "YourWheelServer",
+        "JWT_AUDIENCE": "YourWheelClient",
+        "JWT_KEY": "YourWheel12edwd33f2dasdYourWheel",
+        "JWT_LIFETIME": "3"
+      }
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",

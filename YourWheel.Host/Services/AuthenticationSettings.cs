@@ -3,6 +3,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
     using System.Text;
+
     public class AuthenticationSettings : IAuthenticationSettings
     {
         private readonly IConfiguration _configuration;

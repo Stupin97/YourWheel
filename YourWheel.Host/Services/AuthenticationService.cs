@@ -1,7 +1,6 @@
-﻿using System.Runtime.Intrinsics.Arm;
-
-namespace YourWheel.Host.Services
+﻿namespace YourWheel.Host.Services
 {
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
@@ -19,8 +18,21 @@ namespace YourWheel.Host.Services
 
         public async Task<ClaimsIdentity> GetIdentityAsync(string username, string password)
         {
-            // Беру из базы пользователя,
-            // + если дойдут руки сразу хранить пароли в БД в зашифрованном виде и после расшифровывать и сравнивать
+            var client = await _context.Clients.FirstOrDefaultAsync(x => x.Login == username);
+
+            // + Проверка на пароль !доработать!
+            if (client != null && this.VerifyPassword(password, client.Password))
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(Constants.UserIdClaimType, client.ClientId.ToString())
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, "Token", Constants.UserIdClaimType,
+                    ClaimsIdentity.DefaultRoleClaimType);
+
+                return claimsIdentity;
+            }
 
             return null;
         }
@@ -30,6 +42,11 @@ namespace YourWheel.Host.Services
             // Аналогично - проверял на тестовых значениях
 
             return null;
+        }
+
+        private bool VerifyPassword(string enteredPassword, string hashedPassword)
+        {
+            return true;
         }
     }
 }

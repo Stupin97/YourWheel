@@ -33,6 +33,8 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 
+builder.Services.AddSingleton<IObjectTitlesService, ObjectTitlesService>();
+
 builder.Services.AddSingleton<IAuthenticationSettings>(authSettings);
 
 builder.Services.AddScoped<IJwtService, JwtService>();
@@ -98,5 +100,7 @@ app.UseHandleJwtInHeaderMiddleware();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();

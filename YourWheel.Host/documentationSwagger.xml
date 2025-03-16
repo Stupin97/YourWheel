@@ -14,6 +14,16 @@
             Тип утверждения для Claim
             </summary>
         </member>
+        <member name="T:YourWheel.Host.Controllers.AccountController">
+            <summary>
+            Контроллер для информации об аккаунте пользователя
+            </summary>
+        </member>
+        <member name="T:YourWheel.Host.Controllers.AuthController">
+            <summary>
+            Контроллер для аутентификации пользователя
+            </summary>
+        </member>
         <member name="T:YourWheel.Host.Extensions.ExceptionMiddlewareExtension">
             <summary>
             Расширение для ExceptionMiddleware.
@@ -154,6 +164,36 @@
             </summary>
             <param name="tokenString">Строка с токеном</param>
             <returns>Валидный ли токен</returns>
+        </member>
+        <member name="T:YourWheel.Host.Services.IObjectTitlesService">
+            <summary>
+            Интерфейс локализаций
+            </summary>
+        </member>
+        <member name="P:YourWheel.Host.Services.IObjectTitlesService.Titles">
+            <summary>
+            Список локализаций
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Services.IObjectTitlesService.Initialize">
+            <summary>
+            Инициализация локализаций
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Services.IObjectTitlesService.Add(System.String,System.String,System.String)">
+            <summary>
+            Добавление локализации
+            </summary>
+            <param name="tag"></param>
+            <param name="rus"></param>
+            <param name="eng"></param>
+        </member>
+        <member name="M:YourWheel.Host.Services.IObjectTitlesService.GetTitleByTag(System.String)">
+            <summary>
+            Получить значение объекта с учетом локализации
+            </summary>
+            <param name="tag"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

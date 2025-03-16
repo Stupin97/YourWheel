@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace YourWheel.Domain.Models;
 
-namespace YourWheel.Domain.Models;
-
-public partial class Client
+public class Client
 {
-    public Guid Clientid { get; set; }
+    public Guid ClientId { get; set; }
 
     public string? Name { get; set; }
 

@@ -1,17 +1,21 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 
 using System.Reflection;
 
 using YourWheel.Domain;
+using YourWheel.Host;
 using YourWheel.Host.Extensions;
 using YourWheel.Host.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var authSettings = new AuthenticationSettings(builder.Configuration);
+ConfigurationHelper.Initialize(builder.Configuration);
+
+var authSettings = new AuthenticationSettings();
 
 // Add services to the container.
 builder.Services.AddDbContext<YourWheelDbContext>(options =>

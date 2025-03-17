@@ -3,15 +3,13 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
     using System.Text;
+    using YourWheel.Host.Helpers;
 
     public class AuthenticationSettings : IAuthenticationSettings
     {
-        private readonly IConfiguration _configuration;
-
-        public AuthenticationSettings(IConfiguration configuration)
+        public AuthenticationSettings()
         {
-            this._configuration = configuration;
-
+            /*Позже перенести в appsettings.json*/
             this.JwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
 
             this.JwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");

@@ -4,6 +4,11 @@
         <name>YourWheel.Host</name>
     </assembly>
     <members>
+        <member name="T:YourWheel.Host.ConfigurationHelper">
+            <summary>
+            Конфигурация (на уровне сервиса)
+            </summary>
+        </member>
         <member name="T:YourWheel.Host.Constants">
             <summary>
             Константы

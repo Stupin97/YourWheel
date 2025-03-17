@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using YourWheel.Domain;
+    using YourWheel.Host.Helpers;
 
     public class AuthenticationService : IAuthenticationService
     {
@@ -21,7 +22,7 @@
             var client = await _context.Clients.FirstOrDefaultAsync(x => x.Login == username);
 
             // + Проверка на пароль !доработать!
-            if (client != null && this.VerifyPassword(password, client.Password))
+            if (client != null && SecretHasher.Verify(password, client.Password))
             {
                 var claims = new List<Claim>
                 {
@@ -42,11 +43,6 @@
             // Аналогично - проверял на тестовых значениях
 
             return null;
-        }
-
-        private bool VerifyPassword(string enteredPassword, string hashedPassword)
-        {
-            return true;
         }
     }
 }

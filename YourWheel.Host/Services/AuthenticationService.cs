@@ -19,14 +19,15 @@
 
         public async Task<ClaimsIdentity> GetIdentityAsync(string username, string password)
         {
-            var client = await _context.Clients.FirstOrDefaultAsync(x => x.Login == username);
+            var user = await _context.Users.Include(c => c.Role).FirstOrDefaultAsync(x => x.Login == username);
 
             // + Проверка на пароль !доработать!
-            if (client != null && SecretHasher.Verify(password, client.Password))
+            if (user != null && SecretHasher.Verify(password, user.Password))
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(Constants.UserIdClaimType, client.ClientId.ToString())
+                    new Claim(Constants.UserIdClaimType, user.UserId.ToString()),
+                    new Claim(Constants.UserRoleClaimType, user.Role.Name)
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, "Token", Constants.UserIdClaimType,

@@ -33,12 +33,12 @@
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(string login, string password)
         {
-            ClaimsIdentity clientClaimsIdentity = await this._authenticationService.GetIdentityAsync(login, password);
+            ClaimsIdentity userClaimsIdentity = await this._authenticationService.GetIdentityAsync(login, password);
 
-            if (clientClaimsIdentity == null)
+            if (userClaimsIdentity == null)
                 return BadRequest(new DetailsDto { Details = this._objectTitlesService.GetTitleByTag(ObjectTitles.Constants.TextErrorLoginOrPassword) });
 
-            var jwt = _jwtService.GenerateToken(clientClaimsIdentity.Claims);
+            var jwt = _jwtService.GenerateToken(userClaimsIdentity.Claims);
 
             var tokenString = _jwtService.GetTokenString(jwt);
 

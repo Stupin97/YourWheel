@@ -16,7 +16,13 @@ public partial class YourWheelDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Client> Clients { get; set; }
+    public DbSet<AppUser> AppUsers { get; set; }
+
+    public DbSet<Language> Languages { get; set; }
+
+    public DbSet<Role> Roles { get; set; }
+
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

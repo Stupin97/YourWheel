@@ -9,5 +9,8 @@
         /// Тип утверждения для Claim
         /// </summary>
         public const string UserIdClaimType = "UserId";
+
+
+        public const string UserRoleClaimType = "Role";
     }
 }

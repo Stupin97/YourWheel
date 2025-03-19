@@ -24,9 +24,25 @@
             Контроллер для информации об аккаунте пользователя
             </summary>
         </member>
+        <member name="T:YourWheel.Host.Controllers.AdminController">
+            <summary>
+            Конроллер для работы администратора
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.AdminController.GetCountUsersAsync">
+            <summary>
+            Временный метод действия
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:YourWheel.Host.Controllers.AuthController">
             <summary>
             Контроллер для аутентификации пользователя
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.AuthController.Logout">
+            <summary>
+              Выход
             </summary>
         </member>
         <member name="T:YourWheel.Host.Extensions.ExceptionMiddlewareExtension">

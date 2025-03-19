@@ -1,5 +1,6 @@
 ﻿namespace YourWheel.Host.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
 
@@ -47,6 +48,25 @@
             HttpContext.AddSecurityHeaders();
 
             return NoContent();
+        }
+
+        /// <summary>
+        ///   Выход
+        /// </summary>
+        [Authorize]
+        [HttpGet("logout")]
+        public IActionResult Logout()
+        {
+            var token = HttpContext.ReadToken();
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                HttpContext.DeleteToken();
+
+                return NoContent();
+            }
+
+            return Unauthorized();
         }
     }
 }

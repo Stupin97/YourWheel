@@ -25,6 +25,7 @@
                 expires: now.Add(TimeSpan.FromHours(_authSettings.JwtLifeTime)),
                 signingCredentials: new SigningCredentials(_authSettings.JwtSymmetricSecurityKey,
                     SecurityAlgorithms.HmacSha256));
+
             return jwt;
         }
 

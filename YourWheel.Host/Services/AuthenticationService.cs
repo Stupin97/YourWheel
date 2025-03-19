@@ -41,7 +41,21 @@
 
         public async Task<ClaimsIdentity> GetIdentityAsync(Guid userId)
         {
-            // Аналогично - проверял на тестовых значениях
+            var user = await this._context.Users.FirstOrDefaultAsync(c => c.UserId == userId);
+
+            if (user != null)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(Constants.UserIdClaimType, user.UserId.ToString()),
+                    new Claim(Constants.UserRoleClaimType, user.Role.Name)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, "Token", Constants.UserIdClaimType,
+                    ClaimsIdentity.DefaultRoleClaimType);
+
+                return claimsIdentity;
+            }
 
             return null;
         }

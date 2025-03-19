@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +27,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.RequireHttpsMetadata = true;
         options.TokenValidationParameters = authSettings.JwtValidationParameters;
+    });
+
+builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("RequireAdmin", policy =>
+            policy.RequireClaim("Role", "Admin"));
     });
 
 // https://andrewlock.net/custom-authorisation-policies-and-requirements-in-asp-net-core/

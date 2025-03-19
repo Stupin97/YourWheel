@@ -4,6 +4,26 @@
         <name>YourWheel.Host</name>
     </assembly>
     <members>
+        <member name="T:YourWheel.Host.AuthorizationPolitics.IsAdminRequirement">
+            <summary>
+            Требование для авторизации с проверкой на роль Admin
+            </summary>
+        </member>
+        <member name="T:YourWheel.Host.AuthorizationPolitics.IsAdminRequirementHandler">
+            <summary>
+              Обработчик требования для авторизации с проверкой на роль Admin
+            </summary>
+        </member>
+        <member name="T:YourWheel.Host.AuthorizationPolitics.IsAuthenticationEnabledRequirement">
+            <summary>
+              Требование для авторизации с проверкой на включенную аутентификацию
+            </summary>
+        </member>
+        <member name="T:YourWheel.Host.AuthorizationPolitics.IsAuthenticationEnabledRequirementHandler">
+            <summary>
+              Обработчик требования для авторизации с проверкой на включенную аутентификацию
+            </summary>
+        </member>
         <member name="T:YourWheel.Host.ConfigurationHelper">
             <summary>
             Конфигурация (на уровне сервиса)
@@ -119,6 +139,11 @@
         <member name="T:YourWheel.Host.Services.IAuthenticationSettings">
             <summary>
               Интерфейс для настроек аутентификации
+            </summary>
+        </member>
+        <member name="P:YourWheel.Host.Services.IAuthenticationSettings.IsAuthenticationEnabled">
+            <summary>
+              Проверка на включенную аутентификацию
             </summary>
         </member>
         <member name="P:YourWheel.Host.Services.IAuthenticationSettings.JwtAudience">

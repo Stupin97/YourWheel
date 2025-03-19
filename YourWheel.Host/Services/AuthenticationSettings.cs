@@ -31,6 +31,8 @@
                 IssuerSigningKey = this.JwtSymmetricSecurityKey,
                 ClockSkew = TimeSpan.Zero
             };
+
+            this.IsAuthenticationEnabled = ConfigurationHelper.Configuration.GetValue<bool>("AuthenticationEnabled");
         }
 
         public string JwtAudience { get; }
@@ -42,5 +44,7 @@
         public SymmetricSecurityKey JwtSymmetricSecurityKey { get; }
 
         public TokenValidationParameters JwtValidationParameters { get; }
+
+        public bool IsAuthenticationEnabled { get; }
     }
 }

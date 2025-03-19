@@ -9,6 +9,7 @@ using System.Reflection;
 
 using YourWheel.Domain;
 using YourWheel.Host;
+using YourWheel.Host.AuthorizationPolitics;
 using YourWheel.Host.Extensions;
 using YourWheel.Host.Services;
 
@@ -31,22 +32,26 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization(options =>
     {
-        options.AddPolicy("RequireAdmin", policy =>
-            policy.RequireClaim("Role", "Admin"));
-    });
+        options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .AddRequirements(new IsAuthenticationEnabledRequirement())
+                    .Build();
 
-// https://andrewlock.net/custom-authorisation-policies-and-requirements-in-asp-net-core/
-// ѕозже разрешить доступ и неавторизованным пользовател€м на этапе разработки, чтобы посто€нно не авторизовыватьс€!!!
-// –азобратьс€ лучше, суть:
-// 1. в конфиг добавить сво-во true - значит атворизаци€ об€зательна
-// 2. options.DefaultPolicy = добавить политику с обработкой сво-ва из 1.
-builder.Services.AddAuthorization();
+        options.AddPolicy("Admin",
+                    policy => policy.Requirements.Add(new IsAdminRequirement()));
+
+        //options.AddPolicy("Admin", policy =>
+        //    policy.RequireClaim("Role", "Admin"));
+    });
 
 builder.Services.AddControllers();
 
 builder.Services.AddSingleton<IObjectTitlesService, ObjectTitlesService>();
 
 builder.Services.AddSingleton<IAuthenticationSettings>(authSettings);
+
+builder.Services.AddTransient<IAuthorizationHandler, IsAuthenticationEnabledRequirementHandler>();
+
+builder.Services.AddTransient<IAuthorizationHandler, IsAdminRequirementHandler>();
 
 builder.Services.AddScoped<IJwtService, JwtService>();
 

@@ -8,6 +8,11 @@
     public interface IAuthenticationSettings
     {
         /// <summary>
+        ///   Проверка на включенную аутентификацию
+        /// </summary>
+        bool IsAuthenticationEnabled { get; }
+
+        /// <summary>
         ///   Строка с Audience для jwt
         /// </summary>
         string JwtAudience { get; }

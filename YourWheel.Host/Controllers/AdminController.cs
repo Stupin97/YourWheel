@@ -9,7 +9,7 @@ namespace YourWheel.Host.Controllers
     /// Конроллер для работы администратора
     /// </summary>
     [Route("api/admin")]
-    [Authorize(Policy = "RequireAdmin")]
+    [Authorize(Policy = "Admin")]
     [ApiController]
     public class AdminController : ControllerBase
     {

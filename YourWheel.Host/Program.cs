@@ -45,7 +45,9 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton<IObjectTitlesService, ObjectTitlesService>();
+builder.Services.AddSingleton<IObjectTitlesService>(ñ =>
+            new ObjectTitlesService(Guid.Parse(ObjectTitles.Constants.RussianLanguageGuid),
+            Guid.Parse(ObjectTitles.Constants.EnglishLanguageGuid)));
 
 builder.Services.AddSingleton<IAuthenticationSettings>(authSettings);
 

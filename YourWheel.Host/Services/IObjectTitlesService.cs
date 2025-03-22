@@ -28,8 +28,10 @@
         /// <summary>
         /// Получить значение объекта с учетом локализации
         /// </summary>
-        /// <param name="tag"></param>
+        /// <param name="tag">Тег локализации</param>
+        /// <param name="languageGuid">Id языка</param>
+        /// <param name="isRecursion">Рекурсивный вход</param>
         /// <returns></returns>
-        string GetTitleByTag(string tag);
+        string GetTitleByTag(string tag, Guid languageGuid, bool isRecursion = false);
     }
 }

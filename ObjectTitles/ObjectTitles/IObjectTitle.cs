@@ -18,13 +18,13 @@
         /// <summary>
         /// Конкретное значение с учетом локализации
         /// </summary>
-        public string Title
-        {
-            get
-            {
-                return ObjectTitleLocalizations.Title;
-            }
-        }
+        //public string Title
+        //{
+        //    get
+        //    {
+        //        return ObjectTitleLocalizations.Title;
+        //    }
+        //}
 
         private ObjectTitle()
         {
@@ -39,6 +39,11 @@
         public ObjectTitle(string tag, ObjectTitleLocalizations objectTitleLocalizations) : this(tag)
         {
             this.ObjectTitleLocalizations = objectTitleLocalizations;
+        }
+
+        public string GetTitleByLanguage(Guid languageGuid)
+        {
+            return this.ObjectTitleLocalizations.GetTitle(languageGuid);
         }
     }
 }

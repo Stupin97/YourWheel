@@ -10,19 +10,20 @@
         /// </summary>
         public List<ObjectTitleLocalization> TitleLocalizations { get; set; }
 
-        public string Title
-        {
-            get
-            {
-                // Тут нужно будет из настройки пользователя
-                return this.GetTitle(Guid.NewGuid());
-            }
-        }
+        // Позже переделать под title
+        //public string Title
+        //{
+        //    get
+        //    {
+        //        // Тут нужно будет из настройки пользователя
+        //        return this.GetTitle(Guid.NewGuid());
+        //    }
+        //}
 
-        public override string ToString()
-        {
-            return this.Title ?? string.Empty;
-        }
+        //public override string ToString()
+        //{
+        //    return this.Title ?? string.Empty;
+        //}
 
         public ObjectTitleLocalizations()
         {

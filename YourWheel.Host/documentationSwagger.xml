@@ -262,11 +262,13 @@
             <param name="rus"></param>
             <param name="eng"></param>
         </member>
-        <member name="M:YourWheel.Host.Services.IObjectTitlesService.GetTitleByTag(System.String)">
+        <member name="M:YourWheel.Host.Services.IObjectTitlesService.GetTitleByTag(System.String,System.Guid,System.Boolean)">
             <summary>
             Получить значение объекта с учетом локализации
             </summary>
-            <param name="tag"></param>
+            <param name="tag">Тег локализации</param>
+            <param name="languageGuid">Id языка</param>
+            <param name="isRecursion">Рекурсивный вход</param>
             <returns></returns>
         </member>
     </members>

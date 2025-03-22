@@ -5,11 +5,19 @@
 
     public class ObjectTitlesService : IObjectTitlesService
     {
-        public ObjectTitlesService() 
+        private readonly Guid _rusLanguageGuid;
+
+        private readonly Guid _engLanguageGuid;
+
+        public ObjectTitlesService(Guid rusLanguageGuid, Guid engLanguageGuid) 
         {
-            if (_titles == null)
+            if (this._titles == null)
             {
-                _titles = new Dictionary<string, ObjectTitle>();
+                this._titles = new Dictionary<string, ObjectTitle>();
+
+                this._rusLanguageGuid = rusLanguageGuid;
+
+                this._engLanguageGuid = engLanguageGuid;
 
                 this.Initialize();
             }
@@ -28,9 +36,9 @@
                     ObjectTitleLocalizations objectTitleLocalizations = new ObjectTitleLocalizations();
 
                     // Передать Guid языка (Последний выбор пользователя. Сохранен в базе)
-                    objectTitleLocalizations.TitleLocalizations.Add(new ObjectTitleLocalization(Guid.NewGuid(), rus));
+                    objectTitleLocalizations.TitleLocalizations.Add(new ObjectTitleLocalization(this._rusLanguageGuid, rus));
 
-                    objectTitleLocalizations.TitleLocalizations.Add(new ObjectTitleLocalization(Guid.NewGuid(), eng));
+                    objectTitleLocalizations.TitleLocalizations.Add(new ObjectTitleLocalization(this._engLanguageGuid, eng));
 
                     ObjectTitle objectTitle = new ObjectTitle(tag, objectTitleLocalizations);
 
@@ -43,17 +51,20 @@
             }
         }
 
-        public string GetTitleByTag(string tag)
+        public string GetTitleByTag(string tag, Guid languageGuid, bool isRecursion = false)
         {
             ObjectTitle objectTitle = this.Titles.FirstOrDefault(item => item.Key == tag).Value;
 
             if (objectTitle != null)
             {
-                return objectTitle.Title;
+                //return objectTitle.Title;
+                return objectTitle.GetTitleByLanguage(languageGuid);
             }
             else
             {
-                return this.GetTitleByTag(Constants.UnknownText);
+                return isRecursion
+                    ? throw new ArgumentException($"Ошибка получения локализации по тегу {tag}; language: {languageGuid}.")
+                    : this.GetTitleByTag(Constants.UnknownText, languageGuid, true);
             }
         }
 

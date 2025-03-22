@@ -42,7 +42,7 @@
             ClaimsIdentity userClaimsIdentity = await this._authenticationService.GetIdentityAsync(login, password);
 
             if (userClaimsIdentity == null)
-                return BadRequest(new DetailsDto { Details = this._objectTitlesService.GetTitleByTag(ObjectTitles.Constants.TextErrorLoginOrPassword) });
+                return BadRequest(new DetailsDto { Details = this._objectTitlesService.GetTitleByTag(ObjectTitles.Constants.TextErrorLoginOrPassword, Guid.Parse(ObjectTitles.Constants.RussianLanguageGuid)) });
 
             var jwt = _jwtService.GenerateToken(userClaimsIdentity.Claims);
 
@@ -51,7 +51,7 @@
             AppUserDto appUser = await this._appUserService.GetAppUserDtoAsync(this._jwtService.GetUserId(tokenString), this.HttpContext.Connection.RemoteIpAddress?.ToString());
 
             if (appUser == null)
-                return BadRequest(new DetailsDto { Details = this._objectTitlesService.GetTitleByTag(ObjectTitles.Constants.ErrorText) });
+                return BadRequest(new DetailsDto { Details = this._objectTitlesService.GetTitleByTag(ObjectTitles.Constants.ErrorText, Guid.Parse(ObjectTitles.Constants.RussianLanguageGuid)) });
 
             HttpContext.AddToken(tokenString);
 

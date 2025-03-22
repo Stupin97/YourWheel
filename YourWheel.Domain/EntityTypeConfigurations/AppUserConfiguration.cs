@@ -8,29 +8,31 @@
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
-            builder.HasKey(e => e.AppuserId).HasName("AppUser_pkey");
+            builder.HasKey(e => e.AppUserId).HasName("AppUser_pkey");
 
             builder.ToTable("AppUser");
 
-            builder.Property(e => e.AppuserId)
+            builder.Property(e => e.AppUserId)
                 .HasDefaultValueSql("gen_random_uuid()")
                 .HasColumnName("appuserid")
                 .IsRequired();
 
-            builder.Property(e => e.CurrentlanguageId)
+            builder.Property(e => e.CurrentLanguageId)
+                .HasDefaultValueSql("get_default_language()")
                 .HasColumnName("currentlanguageid")
                 .IsRequired();
 
-            builder.Property(e => e.Isonline)
+            builder.Property(e => e.IsOnline)
                 .HasColumnName("isonline");
 
-            builder.Property(e => e.Lastconnected)
+            builder.Property(e => e.LastConnected)
+                .HasDefaultValueSql("now()")
                 .HasColumnName("lastconnected");
 
-            builder.Property(e => e.Lastdisconected)
+            builder.Property(e => e.LastDisconected)
                 .HasColumnName("lastdisconected");
 
-            builder.Property(e => e.Lastipaddress)
+            builder.Property(e => e.LastIPAddress)
                 .HasMaxLength(64)
                 .HasColumnName("lastipaddress");
 
@@ -38,9 +40,9 @@
                 .HasColumnName("userid")
                 .IsRequired();
 
-            builder.HasOne(d => d.Currentlanguage)
+            builder.HasOne(d => d.CurrentLanguage)
                 .WithMany(p => p.AppUsers)
-                .HasForeignKey(d => d.CurrentlanguageId)
+                .HasForeignKey(d => d.CurrentLanguageId)
                 .HasConstraintName("fk_language_appuser");
 
             builder.HasOne(d => d.User)

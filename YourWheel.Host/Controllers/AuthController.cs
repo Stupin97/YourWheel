@@ -5,6 +5,7 @@
     using System.Security.Claims;
 
     using YourWheel.Domain.Dto;
+    using YourWheel.Domain.Services;
     using YourWheel.Host.Extensions;
     using YourWheel.Host.Services;
 
@@ -19,16 +20,20 @@
 
         private readonly IAuthenticationService _authenticationService;
 
+        private readonly IAppUserService _appUserService;
+
         private readonly IObjectTitlesService _objectTitlesService;
 
         public AuthController(IJwtService jwtService, IAuthenticationService authenticationService,
-            IObjectTitlesService objectTitlesService)
+            IObjectTitlesService objectTitlesService, IAppUserService appUserService)
         {
             this._jwtService = jwtService;
 
             this._authenticationService = authenticationService;
 
             this._objectTitlesService = objectTitlesService;
+
+            this._appUserService = appUserService;
         }
 
         [HttpPost("login")]
@@ -43,9 +48,16 @@
 
             var tokenString = _jwtService.GetTokenString(jwt);
 
+            AppUserDto appUser = await this._appUserService.GetAppUserDtoAsync(this._jwtService.GetUserId(tokenString), this.HttpContext.Connection.RemoteIpAddress?.ToString());
+
+            if (appUser == null)
+                return BadRequest(new DetailsDto { Details = this._objectTitlesService.GetTitleByTag(ObjectTitles.Constants.ErrorText) });
+
             HttpContext.AddToken(tokenString);
 
             HttpContext.AddSecurityHeaders();
+
+            HttpContext.AddCookieKey(HttpContextExtension.YOURWHEEL_CULTURE, appUser.CurrentLanguageId.ToString());
 
             return NoContent();
         }
@@ -55,12 +67,14 @@
         /// </summary>
         [Authorize]
         [HttpGet("logout")]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
             var token = HttpContext.ReadToken();
 
             if (!string.IsNullOrEmpty(token))
             {
+                await this._appUserService.UpdateAppUserAfterLogoutAsync(this._jwtService.GetUserId(token));
+
                 HttpContext.DeleteToken();
 
                 return NoContent();

@@ -80,6 +80,11 @@
               Расширения для HttpContext
             </summary>
         </member>
+        <member name="F:YourWheel.Host.Extensions.HttpContextExtension.YOURWHEEL_CULTURE">
+            <summary>
+            Выбранный пользоввателем язык
+            </summary>
+        </member>
         <member name="M:YourWheel.Host.Extensions.HttpContextExtension.AddSecurityHeaders(Microsoft.AspNetCore.Http.HttpContext)">
             <summary>
               Добавление заголовков для безопасного обмена jwt в куках
@@ -105,6 +110,29 @@
             </summary>
             <param name="context">HttpContext</param>
             <returns>Строка с токеном</returns>
+        </member>
+        <member name="M:YourWheel.Host.Extensions.HttpContextExtension.AddCookieKey(Microsoft.AspNetCore.Http.HttpContext,System.String,System.String)">
+            <summary>
+            Добавление значения по ключу в куки
+            </summary>
+            <param name="context">HttpContext</param>
+            <param name="key">Ключ</param>
+            <param name="value">Значение</param>
+        </member>
+        <member name="M:YourWheel.Host.Extensions.HttpContextExtension.DeleteCookieByKey(Microsoft.AspNetCore.Http.HttpContext,System.String)">
+            <summary>
+              Удаление по ключу из cookies
+            </summary>
+            <param name="context">HttpContext</param>
+            <param name="key">Удаляемый ключ</param>
+        </member>
+        <member name="M:YourWheel.Host.Extensions.HttpContextExtension.ReadCookieByKey(Microsoft.AspNetCore.Http.HttpContext,System.String)">
+            <summary>
+              Чтение по ключу из cookies
+            </summary>
+            <param name="context">HttpContext</param>
+            <param name="key">Запрашиваемый ключ</param>
+            <returns>Строка со значением по ключу</returns>
         </member>
         <member name="T:YourWheel.Host.Middlewares.ExceptionMiddleware">
             <summary>

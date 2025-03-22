@@ -2,18 +2,18 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 
-using System.Reflection;
-
 using YourWheel.Domain;
+using YourWheel.Domain.Services;
 using YourWheel.Host;
 using YourWheel.Host.AuthorizationPolitics;
 using YourWheel.Host.Extensions;
 using YourWheel.Host.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 ConfigurationHelper.Initialize(builder.Configuration);
 
@@ -56,6 +56,8 @@ builder.Services.AddTransient<IAuthorizationHandler, IsAdminRequirementHandler>(
 builder.Services.AddScoped<IJwtService, JwtService>();
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+builder.Services.AddScoped<IAppUserService, AppUserService>();
 
 builder.Services.AddSwaggerGen(c =>
 {

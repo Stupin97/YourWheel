@@ -5,7 +5,7 @@ using YourWheel.Domain.Models;
 
 namespace YourWheel.Domain;
 
-public partial class YourWheelDbContext : DbContext
+public class YourWheelDbContext : DbContext
 {
     public YourWheelDbContext()
     {
@@ -23,6 +23,14 @@ public partial class YourWheelDbContext : DbContext
     public DbSet<Role> Roles { get; set; }
 
     public DbSet<User> Users { get; set; }
+
+    /// <summary>
+    /// Получение (Создание если отсутствует запись) AppUsers по userId пользователя
+    /// </summary>
+    /// <param name="userId">Идентификатор пользователя</param>
+    /// <returns>Набор данных с AppUsers</returns>
+    [DbFunction("set_and_get_upp_user_instance", "public")]
+    public IQueryable<AppUser> SetAndGetUppUserInstance(Guid userId) => FromExpression(() => this.SetAndGetUppUserInstance(userId));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

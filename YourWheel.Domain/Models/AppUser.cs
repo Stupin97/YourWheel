@@ -2,21 +2,21 @@
 
 public class AppUser
 {
-    public Guid AppuserId { get; set; }
+    public Guid AppUserId { get; set; }
 
     public Guid UserId { get; set; }
 
-    public string? Lastipaddress { get; set; }
+    public string? LastIPAddress { get; set; }
 
-    public bool? Isonline { get; set; }
+    public bool? IsOnline { get; set; }
 
-    public DateOnly? Lastconnected { get; set; }
+    public DateTime? LastConnected { get; set; }
 
-    public DateOnly? Lastdisconected { get; set; }
+    public DateTime? LastDisconected { get; set; }
 
-    public Guid CurrentlanguageId { get; set; }
+    public Guid CurrentLanguageId { get; set; }
 
-    public virtual Language Currentlanguage { get; set; } = null!;
+    public Language CurrentLanguage { get; set; } = null!;
 
-    public virtual User User { get; set; } = null!;
+    public User User { get; set; } = null!;
 }

@@ -61,6 +61,7 @@
         {
             this.Add(Constants.TextErrorLoginOrPassword, "Неверное имя пользователя или пароль", "Invalid username or password");
             this.Add(Constants.UnknownText, "Не инициализирован", "Not initialized");
+            this.Add(Constants.ErrorText, "Произошла ошибка", "An error has occurred");
         }
     }
 }

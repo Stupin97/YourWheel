@@ -21,7 +21,6 @@
         {
             var user = await _context.Users.Include(c => c.Role).FirstOrDefaultAsync(x => x.Login == username);
 
-            // + Проверка на пароль !доработать!
             if (user != null && SecretHasher.Verify(password, user.Password))
             {
                 var claims = new List<Claim>

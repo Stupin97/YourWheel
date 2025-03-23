@@ -38,7 +38,12 @@
                 .HasMaxLength(32)
                 .HasColumnName("phone");
 
+            builder.Property(e => e.Email)
+                .HasMaxLength(128)
+                .HasColumnName("email");
+
             builder.Property(e => e.RoleId)
+                .HasDefaultValueSql("get_default_role()")
                 .HasColumnName("roleid")
                 .IsRequired();
 

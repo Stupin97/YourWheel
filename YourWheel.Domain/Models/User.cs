@@ -16,6 +16,8 @@ public class User
 
     public Guid RoleId { get; set; }
 
+    public string? Email { get; set; }
+
     public List<AppUser> AppUsers { get; set; } = new List<AppUser>();
 
     public Role Role { get; set; } = null!;

@@ -65,6 +65,24 @@
               Выход
             </summary>
         </member>
+        <member name="M:YourWheel.Host.Controllers.RegistrationController.RegistrationByLoginAsync(YourWheel.Domain.Dto.UserDto)">
+            <summary>
+            Регистрация через логин и пароль
+            </summary>
+            <param name="userDto">Информация о пользователе</param>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.RegistrationController.RigistrationByPhoneAsync(YourWheel.Domain.Dto.UserDto)">
+            <summary>
+            Регистрация через телефон
+            </summary>
+            <param name="userDto">Информация о пользователе</param>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.RegistrationController.RigistrationByEmailAsync(YourWheel.Domain.Dto.UserDto)">
+            <summary>
+            Регистрация через почту
+            </summary>
+            <param name="userDto">Информация о пользователе</param>
+        </member>
         <member name="T:YourWheel.Host.Extensions.ExceptionMiddlewareExtension">
             <summary>
             Расширение для ExceptionMiddleware.
@@ -270,6 +288,63 @@
             <param name="languageGuid">Id языка</param>
             <param name="isRecursion">Рекурсивный вход</param>
             <returns></returns>
+        </member>
+        <member name="T:YourWheel.Host.Services.Registration.IHelperRegistrationService">
+            <summary>
+            Hepler для сервиса регистрации
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IHelperRegistrationService.IsRegistrationAllowed(System.String)">
+            <summary>
+            Разрешена ли регистрация (не происходит ли одновременно регистарция двух одинаковых пользователей)
+            </summary>
+            <param name="keyValue">Активные регистируемые "значения" - это может быть как login/телефон/email</param>
+            <returns>Разрешена ли регистрация</returns>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IHelperRegistrationService.RemoveRegistrationAttempt(System.String)">
+            <summary>
+            Удаление активной регистрации
+            </summary>
+            <param name="keyValue">Активные регистируемые "значения"</param>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IHelperRegistrationService.TryRegistration(System.String)">
+            <summary>
+            Попытка регистрации (Добавление активной регистрации в случае успеха)
+            </summary>
+            <param name="keyValue">Активные регистируемые "значения"</param>
+            <returns>Одновременно регистируется пользователь - теущая попытка не первая</returns>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.IsAccountOccupiedByAnotherUser(System.String)">
+            <summary>
+            Проверка на занятость аккаунта другим пользователем
+            </summary>
+            <param name="login">телефон/логин/email</param>
+            <returns>Занят ли аккаунт другим пользователем</returns>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.TryRegistrationUser(YourWheel.Domain.Dto.UserDto)">
+            <summary>
+            Попытка зарегистрировать пользователя
+            </summary>
+            <param name="userDto">Информация о пользователе</param>
+            <returns>Успешна ли попытка регистрации</returns>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RigistrationByLoginAsync(YourWheel.Domain.Dto.UserDto)">
+            <summary>
+            Регистрация через логин и пароль
+            </summary>
+            <param name="userDto">Информация о пользователе</param>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RigistrationByPhoneAsync(YourWheel.Domain.Dto.UserDto)">
+            <summary>
+            Регистрация через телефон (https://smsc.ru/)
+            </summary>
+            <param name="userDto">Информация о пользователе</param>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RigistrationByEmailAsync(YourWheel.Domain.Dto.UserDto)">
+            <summary>
+            Регистрация через почту
+            </summary>
+            <param name="userDto">Информация о пользователе</param>
         </member>
     </members>
 </doc>

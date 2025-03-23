@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
+using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore;
 using YourWheel.Domain.Models;
 
@@ -31,6 +33,19 @@ public class YourWheelDbContext : DbContext
     /// <returns>Набор данных с AppUsers</returns>
     [DbFunction("set_and_get_upp_user_instance", "public")]
     public IQueryable<AppUser> SetAndGetUppUserInstance(Guid userId) => FromExpression(() => this.SetAndGetUppUserInstance(userId));
+
+    /// <summary>
+    /// Создание пользователя
+    /// </summary>
+    /// <param name="name">Имя</param>
+    /// <param name="surname">Фамилия</param>
+    /// <param name="login">Логин</param>
+    /// <param name="password">Пароль</param>
+    /// <param name="phone">Телефон</param>
+    /// <param name="email">Эл. почта</param>
+    /// <returns>Набор данных с Users</returns>
+    [DbFunction("set_user_instance", "public")]
+    public IQueryable<User> SetUserInstance(string name, string surname, string login, string password, string phone, string email) => FromExpression(() => this.SetUserInstance(name, surname, login, password, phone, email));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

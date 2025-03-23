@@ -14,5 +14,11 @@
         public string Login { get; set; } = null!;
 
         public string Password { get; set; } = null!;
+
+        public string? Phone { get; set; }
+
+        public Guid RoleId { get; set; }
+
+        public string? Email { get; set; }
     }
 }

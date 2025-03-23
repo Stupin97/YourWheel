@@ -10,6 +10,7 @@ using YourWheel.Host;
 using YourWheel.Host.AuthorizationPolitics;
 using YourWheel.Host.Extensions;
 using YourWheel.Host.Services;
+using YourWheel.Host.Services.Registration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +52,8 @@ builder.Services.AddSingleton<IObjectTitlesService>(ñ =>
 
 builder.Services.AddSingleton<IAuthenticationSettings>(authSettings);
 
+builder.Services.AddSingleton<IHelperRegistrationService, HelperRegistrationService>();
+
 builder.Services.AddTransient<IAuthorizationHandler, IsAuthenticationEnabledRequirementHandler>();
 
 builder.Services.AddTransient<IAuthorizationHandler, IsAdminRequirementHandler>();
@@ -60,6 +63,8 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddScoped<IAppUserService, AppUserService>();
+
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 
 builder.Services.AddSwaggerGen(c =>
 {

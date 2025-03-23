@@ -7,10 +7,11 @@ namespace YourWheel.Host.Controllers
     /// <summary>
     /// Контроллер для информации об аккаунте пользователя
     /// </summary>
+    [Authorize]
     [Route("api/account")]
     [ApiController]
     public class AccountController : ControllerBase
     {
-        
+
     }
 }

@@ -73,6 +73,9 @@
             this.Add(Constants.TextErrorLoginOrPassword, "Неверное имя пользователя или пароль", "Invalid username or password");
             this.Add(Constants.UnknownText, "Не инициализирован", "Not initialized");
             this.Add(Constants.ErrorText, "Произошла ошибка", "An error has occurred");
+            this.Add(Constants.UserAlreadyExistsText, "Пользователь уже существует", "The user already exists");
+            this.Add(Constants.UserIsAlreadyRegisteringAtTheMomentText, "Пользователь уже проходит регистрацию в данный момент", "The user is already registering at the moment");
+            this.Add(Constants.OkText, "Ок", "Ok");
         }
     }
 }

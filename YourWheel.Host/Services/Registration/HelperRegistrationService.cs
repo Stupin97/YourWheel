@@ -25,7 +25,7 @@
         {
             lock (HelperRegistrationService.LockObject)
             {
-                if (this._activeRegistrations.TryGetValue(keyValue, out var registration))
+                if (this.IsRegistrationAllowed(keyValue))
                 {
                     this._activeRegistrations.AddOrUpdate(keyValue, DateTime.Now, (k, v) => DateTime.Now);
 

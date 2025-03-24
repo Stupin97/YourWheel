@@ -42,10 +42,10 @@
             Tuple<bool, string> result = await this._registrationService.IsAccountOccupiedByAnotherUser(userDto.Login);
 
             if (result.Item1)
-                return BadRequest(new DetailsDto 
+                return BadRequest(new DetailsDto
                 {
                     Details = this._objectTitlesService.GetTitleByTag(result.Item2,
-                    Guid.Parse(ObjectTitles.Constants.RussianLanguageGuid)) 
+                    Guid.Parse(ObjectTitles.Constants.RussianLanguageGuid))
                 });
 
             ClaimsIdentity userClaimsIdentity = await this._registrationService.RigistrationByLoginAsync(userDto);
@@ -85,6 +85,8 @@
         [HttpPost("registration-by-email")]
         public async Task<IActionResult> RigistrationByEmailAsync(UserDto userDto)
         {
+            // SendGrid
+
             return NoContent();
         }
     }

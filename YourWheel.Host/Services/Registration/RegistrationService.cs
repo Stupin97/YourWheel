@@ -34,77 +34,81 @@
             return Tuple.Create(result, result ? ObjectTitles.Constants.UserAlreadyExistsText : ObjectTitles.Constants.OkText);
         }
 
-        public async Task<ClaimsIdentity> RigistrationByLoginAsync(UserDto userDto)
+        public void RemoveRegistrationAttempt(string login)
         {
-            try
-            {
-                Exception lastException = null;
+            this._helperRegistrationService.RemoveRegistrationAttempt(login);
+        }
 
-                // 3 попытки создания
-                for (int i = 0; i < 3; i++)
+        public async Task<ClaimsIdentity> RegistrationByLoginAsync(UserDto userDto)
+        {
+            // При регистрации через логин Dto не меняем
+
+            return await this.RegistrationUserAsync(userDto);
+        }
+
+        public async Task<ClaimsIdentity> RegistrationByEmailAsync(UserDto userDto)
+        {
+            userDto.Login = userDto.Email;
+
+            return await this.RegistrationUserAsync(userDto);
+        }
+
+        public async Task<ClaimsIdentity> RegistrationByPhoneAsync(UserDto userDto)
+        {
+            userDto.Login = userDto.Phone;
+
+            return await this.RegistrationUserAsync(userDto);
+        }
+
+        public async Task<ClaimsIdentity> RegistrationUserAsync(UserDto userDto)
+        {
+            Exception lastException = null;
+
+            // 3 попытки создания
+            for (int i = 0; i < 3; i++)
+            {
+                try
                 {
-                    try
-                    {
-                        User user = await this._context.SetUserInstance
-                            (
-                                userDto.Name, userDto.Surname, userDto.Login,
-                                userDto.Password, userDto.Phone, userDto.Email
-                            ).FirstOrDefaultAsync();
+                    User user = await this._context.SetUserInstance
+                        (
+                            userDto.Name, userDto.Surname, userDto.Login,
+                            userDto.Password, userDto.Phone, userDto.Email
+                        ).FirstOrDefaultAsync();
 
-                        if (user == null)
-                            throw new ArgumentException($"При регистрации пользователя произошла ошибка");
+                    if (user == null)
+                        throw new ArgumentException($"При регистрации пользователя произошла ошибка");
 
-                        Role role = await this._context.Roles.FirstOrDefaultAsync(c => c.RoleId == user.RoleId);
+                    Role role = await this._context.Roles.FirstOrDefaultAsync(c => c.RoleId == user.RoleId);
 
-                        if (role == null)
-                            throw new ArgumentException($"Получение роли для только что зарегистированного пользователя: {user.UserId} прошло с ошибкой");
+                    if (role == null)
+                        throw new ArgumentException($"Получение роли для только что зарегистированного пользователя: {user.UserId} прошло с ошибкой");
 
-                        var claims = new List<Claim>
-                                {
-                                    new Claim(Constants.UserIdClaimType, user.UserId.ToString()),
-                                    new Claim(Constants.UserRoleClaimType, role.Name)
-                                };
+                    var claims = new List<Claim>
+                            {
+                                new Claim(Constants.UserIdClaimType, user.UserId.ToString()),
+                                new Claim(Constants.UserRoleClaimType, role.Name)
+                            };
 
-                        return new ClaimsIdentity(claims, "Token", Constants.UserIdClaimType, Constants.UserRoleClaimType);
-                    }
-                    catch (NpgsqlException npgsqlException)
-                    {
-                        // Продумать обработку исключений
-                        // 08001 - потерянное соединение с сервером
-                        // 42804 - ошибка подключения SQL
-                        // 42703 - неопределенный столбец
-                    }
-                    catch (TimeoutException ex)
-                    {
-                        // Добавить
-                    }
-                    catch (Exception exeption)
-                    {
-                        lastException = exeption;
-                    }
+                    return new ClaimsIdentity(claims, "Token", Constants.UserIdClaimType, Constants.UserRoleClaimType);
                 }
-
-                throw lastException;
+                catch (NpgsqlException npgsqlException)
+                {
+                    // Продумать обработку исключений
+                    // 08001 - потерянное соединение с сервером
+                    // 42804 - ошибка подключения SQL
+                    // 42703 - неопределенный столбец
+                }
+                catch (TimeoutException ex)
+                {
+                    // Добавить
+                }
+                catch (Exception exeption)
+                {
+                    lastException = exeption;
+                }
             }
-            finally
-            {
-                this._helperRegistrationService.RemoveRegistrationAttempt(userDto.Login);
-            }
-        }
 
-        public Task<ClaimsIdentity> RigistrationByEmailAsync(UserDto userDto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ClaimsIdentity> RigistrationByPhoneAsync(UserDto userDto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> TryRegistrationUser(UserDto userDto)
-        {
-            throw new NotImplementedException();
+            throw lastException;
         }
     }
 }

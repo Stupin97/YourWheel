@@ -11,6 +11,7 @@ using YourWheel.Host.AuthorizationPolitics;
 using YourWheel.Host.Extensions;
 using YourWheel.Host.Services;
 using YourWheel.Host.Services.Registration;
+using YourWheel.Host.Services.Senders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,10 +55,6 @@ builder.Services.AddSingleton<IAuthenticationSettings>(authSettings);
 
 builder.Services.AddSingleton<IHelperRegistrationService, HelperRegistrationService>();
 
-builder.Services.AddTransient<IAuthorizationHandler, IsAuthenticationEnabledRequirementHandler>();
-
-builder.Services.AddTransient<IAuthorizationHandler, IsAdminRequirementHandler>();
-
 builder.Services.AddScoped<IJwtService, JwtService>();
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
@@ -65,6 +62,12 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IAppUserService, AppUserService>();
 
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+
+builder.Services.AddTransient<IAuthorizationHandler, IsAuthenticationEnabledRequirementHandler>();
+
+builder.Services.AddTransient<IAuthorizationHandler, IsAdminRequirementHandler>();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddSwaggerGen(c =>
 {

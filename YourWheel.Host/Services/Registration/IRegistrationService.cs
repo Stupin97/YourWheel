@@ -17,25 +17,30 @@
         /// Попытка зарегистрировать пользователя
         /// </summary>
         /// <param name="userDto">Информация о пользователе</param>
-        /// <returns>Успешна ли попытка регистрации</returns>
-        Task<bool> TryRegistrationUser(UserDto userDto);
+        Task<ClaimsIdentity> RegistrationUserAsync(UserDto userDto);
+
+        /// <summary>
+        /// Удаление активной регистрации
+        /// </summary>
+        /// <param name="login">телефон/логин/email</param>
+        void RemoveRegistrationAttempt(string login);
 
         /// <summary>
         /// Регистрация через логин и пароль
         /// </summary>
         /// <param name="userDto">Информация о пользователе</param>
-        Task<ClaimsIdentity> RigistrationByLoginAsync(UserDto userDto);
+        Task<ClaimsIdentity> RegistrationByLoginAsync(UserDto userDto);
 
         /// <summary>
         /// Регистрация через телефон (https://smsc.ru/)
         /// </summary>
         /// <param name="userDto">Информация о пользователе</param>
-        Task<ClaimsIdentity> RigistrationByPhoneAsync(UserDto userDto);
+        Task<ClaimsIdentity> RegistrationByPhoneAsync(UserDto userDto);
 
         /// <summary>
         /// Регистрация через почту
         /// </summary>
         /// <param name="userDto">Информация о пользователе</param>
-        Task<ClaimsIdentity> RigistrationByEmailAsync(UserDto userDto);
+        Task<ClaimsIdentity> RegistrationByEmailAsync(UserDto userDto);
     }
 }

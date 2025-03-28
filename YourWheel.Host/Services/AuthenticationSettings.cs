@@ -9,14 +9,17 @@
     {
         public AuthenticationSettings()
         {
-            /*Позже перенести в appsettings.json*/
-            this.JwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
+            this.JwtAudience = ConfigurationHelper.Configuration.GetValue<string>("JWT_AUDIENCE")
+                                ?? Environment.GetEnvironmentVariable("JWT_AUDIENCE");
 
-            this.JwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+            this.JwtIssuer = ConfigurationHelper.Configuration.GetValue<string>("JWT_ISSUER")
+                                ?? Environment.GetEnvironmentVariable("JWT_ISSUER");
 
-            this.JwtLifeTime = Convert.ToInt32(Environment.GetEnvironmentVariable("JWT_LIFETIME"));
+            this.JwtLifeTime = Convert.ToInt32(ConfigurationHelper.Configuration.GetValue<string>("JWT_LIFETIME")
+                                ?? Environment.GetEnvironmentVariable("JWT_LIFETIME"));
 
-            var key = Environment.GetEnvironmentVariable("JWT_KEY");
+            var key = ConfigurationHelper.Configuration.GetValue<string>("JWT_KEY")
+                        ?? Environment.GetEnvironmentVariable("JWT_KEY");
 
             if (key != null) this.JwtSymmetricSecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key));
 

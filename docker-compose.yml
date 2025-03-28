@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  your-wheel:
+    container_name: your-wheel
+    build:
+      context: .
+      dockerfile: YourWheel.Host/Dockerfile
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=https://+:443;http://+:80
+        - ASPNETCORE_Kestrel__Certificates__Default__Password=11111
+        - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+        - DB_CONNECTION_STRING_POSTGRES=${DB_CONNECTION_STRING_POSTGRES}
+        - JWT_ISSUER=${JWT_ISSUER}
+        - JWT_AUDIENCE=${JWT_AUDIENCE}
+        - JWT_KEY=${JWT_KEY}
+        - JWT_LIFETIME=${JWT_LIFETIME}
+    restart:
+        always
+    ports:
+        - "5000:80"
+        - "5001:443"
+    networks:
+       - default
+    volumes:
+       - ~/.aspnet/https:/https:ro

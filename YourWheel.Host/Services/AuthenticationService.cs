@@ -40,7 +40,7 @@
 
         public async Task<ClaimsIdentity> GetIdentityAsync(Guid userId)
         {
-            var user = await this._context.Users.FirstOrDefaultAsync(c => c.UserId == userId);
+            var user = await this._context.Users.Include(c => c.Role).FirstOrDefaultAsync(c => c.UserId == userId);
 
             if (user != null)
             {

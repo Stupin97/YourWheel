@@ -44,7 +44,6 @@
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_CONNECTION_STRING_POSTGRES": "Host=localhost;Port=5432;Database=YourWheel;Username=postgres;Password=11111",
         "JWT_ISSUER": "YourWheelServer",
         "JWT_AUDIENCE": "YourWheelClient",
         "JWT_KEY": "YourWheel12edwd33f2dasdYourWheel",

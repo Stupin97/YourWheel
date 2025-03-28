@@ -71,15 +71,15 @@
             </summary>
             <param name="userDto">Информация о пользователе</param>
         </member>
-        <member name="M:YourWheel.Host.Controllers.RegistrationController.RigistrationByPhoneAsync(YourWheel.Domain.Dto.UserDto)">
+        <member name="M:YourWheel.Host.Controllers.RegistrationController.RegistrationByEmailAsync(YourWheel.Domain.Dto.UserDto)">
             <summary>
-            Регистрация через телефон
+            Регистрация через почту
             </summary>
             <param name="userDto">Информация о пользователе</param>
         </member>
-        <member name="M:YourWheel.Host.Controllers.RegistrationController.RigistrationByEmailAsync(YourWheel.Domain.Dto.UserDto)">
+        <member name="M:YourWheel.Host.Controllers.RegistrationController.RegistrationByPhoneAsync(YourWheel.Domain.Dto.UserDto)">
             <summary>
-            Регистрация через почту
+            Регистрация через телефон
             </summary>
             <param name="userDto">Информация о пользователе</param>
         </member>
@@ -321,30 +321,43 @@
             <param name="login">телефон/логин/email</param>
             <returns>Занят ли аккаунт другим пользователем</returns>
         </member>
-        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.TryRegistrationUser(YourWheel.Domain.Dto.UserDto)">
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RegistrationUserAsync(YourWheel.Domain.Dto.UserDto)">
             <summary>
             Попытка зарегистрировать пользователя
             </summary>
             <param name="userDto">Информация о пользователе</param>
-            <returns>Успешна ли попытка регистрации</returns>
         </member>
-        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RigistrationByLoginAsync(YourWheel.Domain.Dto.UserDto)">
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RemoveRegistrationAttempt(System.String)">
+            <summary>
+            Удаление активной регистрации
+            </summary>
+            <param name="login">телефон/логин/email</param>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RegistrationByLoginAsync(YourWheel.Domain.Dto.UserDto)">
             <summary>
             Регистрация через логин и пароль
             </summary>
             <param name="userDto">Информация о пользователе</param>
         </member>
-        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RigistrationByPhoneAsync(YourWheel.Domain.Dto.UserDto)">
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RegistrationByPhoneAsync(YourWheel.Domain.Dto.UserDto)">
             <summary>
             Регистрация через телефон (https://smsc.ru/)
             </summary>
             <param name="userDto">Информация о пользователе</param>
         </member>
-        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RigistrationByEmailAsync(YourWheel.Domain.Dto.UserDto)">
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RegistrationByEmailAsync(YourWheel.Domain.Dto.UserDto)">
             <summary>
             Регистрация через почту
             </summary>
             <param name="userDto">Информация о пользователе</param>
+        </member>
+        <member name="M:YourWheel.Host.Services.Senders.IEmailSender.SendEmailAsync(System.String,System.String,System.String)">
+            <summary>
+            Отправка письма
+            </summary>
+            <param name="toEmail">Получатель</param>
+            <param name="subject">Тема</param>
+            <param name="body">Тело письма</param>
         </member>
     </members>
 </doc>

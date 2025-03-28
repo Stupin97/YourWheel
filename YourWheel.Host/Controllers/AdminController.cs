@@ -26,9 +26,13 @@ namespace YourWheel.Host.Controllers
         /// <returns></returns>
         [HttpPost("get-count-users")]
 
-        public async Task<ActionResult<int>> GetCountUsersAsync()
+        public async Task<ActionResult<List<string>>> GetCountUsersAsync()
         {
-            return Ok(4);
+            return Ok(new List<string>()
+            {
+                ConfigurationHelper.Configuration.GetValue<string>("DB_CONNECTION_STRING_POSTGRES"),
+                Environment.GetEnvironmentVariable("DB_CONNECTION_STRING_POSTGRES")
+            });
         }
     }
 }

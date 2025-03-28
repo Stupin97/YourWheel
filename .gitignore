@@ -41,3 +41,6 @@ logs
 
 # FilesOfDatabase
 FilesOfDatabase/
+
+#Environment
+*.env

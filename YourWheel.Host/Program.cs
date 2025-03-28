@@ -1,3 +1,5 @@
+using DotNetEnv;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.CookiePolicy;
@@ -15,6 +17,10 @@ using YourWheel.Host.Services.Senders;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Env.Load();
+
+builder.Configuration.AddEnvironmentVariables();
+
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 ConfigurationHelper.Initialize(builder.Configuration);
@@ -23,7 +29,10 @@ var authSettings = new AuthenticationSettings();
 
 // Add services to the container.
 builder.Services.AddDbContext<YourWheelDbContext>(options =>
-    options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION_STRING_POSTGRES")));
+    options.UseNpgsql(
+        ConfigurationHelper.Configuration.GetValue<string>("DB_CONNECTION_STRING_POSTGRES") 
+        ?? Environment.GetEnvironmentVariable("DB_CONNECTION_STRING_POSTGRES"))
+    );
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -47,7 +56,7 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddControllers();
 
-builder.Services.AddSingleton<IObjectTitlesService>(ñ =>
+builder.Services.AddSingleton<IObjectTitlesService>(c =>
             new ObjectTitlesService(Guid.Parse(ObjectTitles.Constants.RussianLanguageGuid),
             Guid.Parse(ObjectTitles.Constants.EnglishLanguageGuid)));
 

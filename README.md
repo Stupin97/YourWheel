@@ -5,8 +5,8 @@
 	- Удалить существующие сертификаты: 
 		- Запустить powershell и выполнить: dotnet dev-certs https --clean
 	- Сгенерировать новый сертификат и экспортировать его в защищенный паролем .pfx файл:
-		- В powershell выполнить: dotnet dev-certs https --trust -ep "$env:USERPROFILE\.aspnet\https\aspnetapp.pfx" -p 11111
-		(11111 - пароль так же указан в docker-compose.yml)
+		- В powershell выполнить: dotnet dev-certs https --trust -ep "$env:USERPROFILE\.aspnet\https\aspnetapp.pfx" -p pass1111
+		(pass1111 - пароль так же указан в docker-compose.yml)
 
 # Развертывание docker контейнера для окружения (для работы необходим https сертификат)
 

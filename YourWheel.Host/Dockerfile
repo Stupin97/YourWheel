@@ -34,5 +34,8 @@ EXPOSE 443
 # Копируем опубликованные файлы из этапа publish
 COPY --from=publish /app/publish .
 
+RUN mkdir -p /app/certificates
+COPY YourWheel.Host/certificates/aspnetapp.pfx /app/certificates/
+
 # Указываем точку входа
 ENTRYPOINT ["dotnet", "YourWheel.Host.dll"]

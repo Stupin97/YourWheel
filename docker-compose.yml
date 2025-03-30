@@ -8,9 +8,10 @@ services:
       dockerfile: YourWheel.Host/Dockerfile
     environment:
         - ASPNETCORE_ENVIRONMENT=Development
-        - ASPNETCORE_URLS=https://+:443;http://+:80
-        - ASPNETCORE_Kestrel__Certificates__Default__Password=11111
-        - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+        - ASPNETCORE_URLS=https://+;http://+
+        - ASPNETCORE_HTTPS_PORT=5001
+        - ASPNETCORE_Kestrel__Certificates__Default__Password=pass1111
+        - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/certificates/aspnetapp.pfx
         - DB_CONNECTION_STRING_POSTGRES=${DB_CONNECTION_STRING_POSTGRES}
         - JWT_ISSUER=${JWT_ISSUER}
         - JWT_AUDIENCE=${JWT_AUDIENCE}
@@ -24,4 +25,4 @@ services:
     networks:
        - default
     volumes:
-       - ~/.aspnet/https:/https:ro
+       - /MicroService/.aspnet/https:/https/

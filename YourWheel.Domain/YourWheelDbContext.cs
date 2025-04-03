@@ -26,6 +26,8 @@ public class YourWheelDbContext : DbContext
 
     public DbSet<User> Users { get; set; }
 
+    public DbSet<Car> Cars { get; set; }
+
     /// <summary>
     /// Получение (Создание если отсутствует запись) AppUsers по userId пользователя
     /// </summary>

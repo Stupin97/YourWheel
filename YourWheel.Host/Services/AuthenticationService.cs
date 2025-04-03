@@ -14,12 +14,12 @@
 
         public AuthenticationService(YourWheelDbContext context)
         {
-            _context = context;
+            this._context = context;
         }
 
         public async Task<ClaimsIdentity> GetIdentityAsync(string username, string password)
         {
-            var user = await _context.Users.Include(c => c.Role).FirstOrDefaultAsync(x => x.Login == username);
+            var user = await this._context.Users.Include(c => c.Role).FirstOrDefaultAsync(x => x.Login == username);
 
             if (user != null && SecretHasher.Verify(password, user.Password))
             {

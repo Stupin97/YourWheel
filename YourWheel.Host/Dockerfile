@@ -1,41 +1,48 @@
-# Используем многоэтапную сборку
-
-# Этап 1: Сборка (build)
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Копируем файл решения, чтобы восстановить зависимости
-COPY *.sln .
-
-# Копируем все csproj файлы и восстанавливаем
 COPY YourWheel.Host/YourWheel.Host.csproj YourWheel.Host/
 COPY YourWheel.Domain/YourWheel.Domain.csproj YourWheel.Domain/
 COPY ObjectTitles/ObjectTitles.csproj ObjectTitles/
 
-# Восстанавливаем зависимости для host проекта
+#/src/.nuget
 RUN dotnet restore YourWheel.Host/YourWheel.Host.csproj --source https://api.nuget.org/v3/index.json
 
-# Копируем все исходники
 COPY . .
 
-# Собираем host проект
-RUN dotnet build YourWheel.Host/YourWheel.Host.csproj -c Release -o /app/build
+#
+RUN dotnet tool install --global dotnet-ef --version 9.0.2
+ENV PATH="$PATH:/root/.dotnet/tools"
 
-# Этап 2: Публикация (publish)
-FROM build AS publish
+# /src/app/db_init/migrations.sql
+RUN dotnet ef migrations script --idempotent --output /app/db_init/migrations.sql --project YourWheel.Host/YourWheel.Host.csproj --startup-project YourWheel.Host
+
+# /src/app/publish/YourWheel.Host.dll
 RUN dotnet publish YourWheel.Host/YourWheel.Host.csproj -c Release -o /app/publish
 
-# Этап 3: Финальный образ (final)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
+
+# /app/publish/YourWheel.Host.dll
+COPY --from=build /app/publish .
+
+# /app/db_init/migrations.sql
+COPY --from=build /app/db_init/migrations.sql ./db_init/migrations.sql
+
+# /app/db_init/*.sql
+COPY YourWheel.Domain/FilesOfDatabase/initdb/CreateSomeFunctionsBeforeMigration.sql ./db_init/CreateSomeFunctionsBeforeMigration.sql
+COPY YourWheel.Domain/FilesOfDatabase/initdb/InitData.sql ./db_init/InitData.sql
+
 EXPOSE 80
 EXPOSE 443
 
-# Копируем опубликованные файлы из этапа publish
-COPY --from=publish /app/publish .
+# /app/certificates/aspnetapp.pfx
+COPY YourWheel.Host/certificates/aspnetapp.pfx ./certificates/
 
-RUN mkdir -p /app/certificates
-COPY YourWheel.Host/certificates/aspnetapp.pfx /app/certificates/
+# /app/DockerEntrypoint.sh
+COPY DockerEntrypoint.sh ./DockerEntrypoint.sh
+RUN chmod +x ./DockerEntrypoint.sh
 
-# Указываем точку входа
-ENTRYPOINT ["dotnet", "YourWheel.Host.dll"]
+RUN apt-get update && apt-get install -y netcat-openbsd postgresql-client
+
+ENTRYPOINT ["/bin/bash", "DockerEntrypoint.sh"]

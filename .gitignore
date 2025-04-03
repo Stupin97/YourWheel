@@ -40,7 +40,10 @@ logs
 .idea/
 
 # FilesOfDatabase
-FilesOfDatabase/
+backup/
+Tables/
+QueryAndFunc.sql
+
 
 #Environment
 *.env

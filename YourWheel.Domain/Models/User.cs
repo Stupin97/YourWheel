@@ -21,4 +21,6 @@ public class User
     public List<AppUser> AppUsers { get; set; } = new List<AppUser>();
 
     public Role Role { get; set; } = null!;
+
+    public List<Car> Cars { get; set; } = new List<Car>();
 }

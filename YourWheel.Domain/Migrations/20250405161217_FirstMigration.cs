@@ -79,8 +79,8 @@ namespace YourWheel.Domain.Migrations
                     userid = table.Column<Guid>(type: "uuid", nullable: false),
                     lastipaddress = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),
                     isonline = table.Column<bool>(type: "boolean", nullable: true),
-                    lastconnected = table.Column<DateTime>(type: "timestamp without time zone", nullable: true, defaultValueSql: "now()"),
-                    lastdisconected = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    lastconnected = table.Column<DateTime>(type: "timestamp with time zone", nullable: true, defaultValueSql: "now()"),
+                    lastdisconected = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     currentlanguageid = table.Column<Guid>(type: "uuid", nullable: false, defaultValueSql: "get_default_language()")
                 },
                 constraints: table =>

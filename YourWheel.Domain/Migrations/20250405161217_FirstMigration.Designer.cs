@@ -63,12 +63,12 @@ namespace YourWheel.Domain.Migrations
 
                     b.Property<DateTime?>("LastConnected")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("lastconnected")
                         .HasDefaultValueSql("now()");
 
                     b.Property<DateTime?>("LastDisconected")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("lastdisconected");
 
                     b.Property<string>("LastIPAddress")

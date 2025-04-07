@@ -1,6 +1,8 @@
-# cmd: git clone https://github.com/Stupin97/YourWheel.git в созданную директорию, например YourWheel (далее корня репозитория == YourWheel)
-
-# Запросить у меня файл .env
+# Подготовка к запуску
+	- cmd: git clone https://github.com/Stupin97/YourWheel.git в созданную директорию, например YourWheel (далее корня репозитория == YourWheel)
+	- Запросить у меня файл .env - расположить в YourWheel.Host
+	- Проверить файл DockerEntrypoint.sh ! дожен быть формат LF (не CRLF) !
+#
 
 # Создание https сертификата для окружения
 
@@ -17,9 +19,3 @@
 	- Выполнить: docker-compose -f docker-compose.yml up --build 
 	- Сервер слушает по адресу: https://localhost:5001/
 	- Swagger: https://localhost:5001/swagger/index.html
-
-# (!ПРОПУСТИТЬ!) На время разработки 
-	- Создать образ на основе файла Dockerfile и контекста (YourWheel)
- 		- docker build -t your-wheel -f YourWheel.Host/Dockerfile .
-	- Запустить контейнер в фоновом режиме (YourWheel)
-		- docker-compose up -d

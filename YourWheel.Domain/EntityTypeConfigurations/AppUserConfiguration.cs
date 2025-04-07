@@ -26,10 +26,12 @@
                 .HasColumnName("isonline");
 
             builder.Property(e => e.LastConnected)
+                .HasColumnType("timestamp with time zone")
                 .HasDefaultValueSql("now()")
                 .HasColumnName("lastconnected");
 
             builder.Property(e => e.LastDisconected)
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("lastdisconected");
 
             builder.Property(e => e.LastIPAddress)

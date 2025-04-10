@@ -7,6 +7,7 @@
     using YourWheel.Domain.Dto;
     using YourWheel.Domain.Services;
     using YourWheel.Host.Extensions;
+    using YourWheel.Host.Logging;
     using YourWheel.Host.Services;
 
     /// <summary>
@@ -48,16 +49,20 @@
 
             var tokenString = _jwtService.GetTokenString(jwt);
 
-            AppUserDto appUser = await this._appUserService.GetAppUserDtoAsync(this._jwtService.GetUserId(tokenString), this.HttpContext.Connection.RemoteIpAddress?.ToString());
+            Guid userId = this._jwtService.GetUserId(tokenString);
+
+            AppUserDto appUser = await this._appUserService.GetAppUserDtoAsync(userId, this.HttpContext.Connection.RemoteIpAddress?.ToString());
 
             if (appUser == null)
                 return BadRequest(new DetailsDto { Details = this._objectTitlesService.GetTitleByTag(ObjectTitles.Constants.ErrorText, Guid.Parse(ObjectTitles.Constants.RussianLanguageGuid)) });
 
-            HttpContext.AddToken(tokenString);
+            this.HttpContext.AddToken(tokenString);
 
-            HttpContext.AddSecurityHeaders();
+            this.HttpContext.AddSecurityHeaders();
 
-            HttpContext.AddCookieKey(HttpContextExtension.YOURWHEEL_CULTURE, appUser.CurrentLanguageId.ToString());
+            this.HttpContext.AddCookieKey(HttpContextExtension.YOURWHEEL_CULTURE, appUser.CurrentLanguageId.ToString());
+
+            Log.Info("Success login", userId);
 
             return NoContent();
         }
@@ -69,13 +74,17 @@
         [HttpGet("logout")]
         public async Task<IActionResult> Logout()
         {
-            var token = HttpContext.ReadToken();
+            var token = this.HttpContext.ReadToken();
 
             if (!string.IsNullOrEmpty(token))
             {
-                await this._appUserService.UpdateAppUserAfterLogoutAsync(this._jwtService.GetUserId(token));
+                Guid userId = this._jwtService.GetUserId(token);
+
+                await this._appUserService.UpdateAppUserAfterLogoutAsync(userId);
 
                 HttpContext.DeleteToken();
+
+                Log.Info("User logout", userId);
 
                 return NoContent();
             }

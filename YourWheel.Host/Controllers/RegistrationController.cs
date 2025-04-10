@@ -6,6 +6,7 @@
     using YourWheel.Domain.Dto;
     using YourWheel.Domain.Services;
     using YourWheel.Host.Extensions;
+    using YourWheel.Host.Logging;
     using YourWheel.Host.Services;
     using YourWheel.Host.Services.Registration;
 
@@ -115,6 +116,8 @@
 
                 var tokenString = _jwtService.GetTokenString(jwt);
 
+                Guid userId = this._jwtService.GetUserId(tokenString);
+
                 AppUserDto appUser = await this._appUserService.GetAppUserDtoAsync(this._jwtService.GetUserId(tokenString), this.HttpContext.Connection.RemoteIpAddress?.ToString());
 
                 if (appUser == null)
@@ -125,6 +128,8 @@
                 HttpContext.AddSecurityHeaders();
 
                 HttpContext.AddCookieKey(HttpContextExtension.YOURWHEEL_CULTURE, appUser.CurrentLanguageId.ToString());
+
+                Log.Info($"User has successfully registered by {registrationType}", userId);
 
                 return NoContent();
             }

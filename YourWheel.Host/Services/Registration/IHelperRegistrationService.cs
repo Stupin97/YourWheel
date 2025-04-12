@@ -1,4 +1,6 @@
-﻿namespace YourWheel.Host.Services.Registration
+﻿using YourWheel.Domain.Dto;
+
+namespace YourWheel.Host.Services.Registration
 {
     /// <summary>
     /// Hepler для сервиса регистрации
@@ -21,8 +23,22 @@
         /// <summary>
         /// Попытка регистрации (Добавление активной регистрации в случае успеха)
         /// </summary>
-        /// <param name="keyValue">Активные регистируемые "значения"</param>
+        /// <param name="userDto">Активные регистируемый пользователь</param>
         /// <returns>Одновременно регистируется пользователь - теущая попытка не первая</returns>
-        bool TryRegistration(string keyValue);
+        bool TryRegistration(UserDto userDto);
+
+        /// <summary>
+        /// Корректность введеного кода
+        /// </summary>
+        /// <param name="enteredCode">Введенный код</param>
+        /// <param name="login">Логин авторизовывающегося пользователя</param>
+        bool IsEteredCodeCorrect(string enteredCode, string login);
+
+        /// <summary>
+        /// Получить регистрируемого пользователя
+        /// </summary>
+        /// <param name="login">Логин пользователя</param>
+        /// <returns>Введенныя информация пользователя</returns>
+        public UserDto GetRegisteredUser(string login);
     }
 }

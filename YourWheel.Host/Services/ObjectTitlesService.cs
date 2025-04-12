@@ -76,6 +76,16 @@
             this.Add(Constants.UserAlreadyExistsText, "Пользователь уже существует", "The user already exists");
             this.Add(Constants.UserIsAlreadyRegisteringAtTheMomentText, "Пользователь уже проходит регистрацию в данный момент", "The user is already registering at the moment");
             this.Add(Constants.OkText, "Ок", "Ok");
+            this.Add(Constants.EnterRequiredFields, "Введите обязательные поля", "Enter the required fields");
+            this.Add(Constants.IncorrectPassword, "Некорректный пароль", "Incorrect password");
+            this.Add(Constants.MessageHasBeenSent, "Сообщение с кодом было отправлено на {0}", "A message with the code has been sent to {0}");
+            this.Add(Constants.ErrorOccurredWhileSendingMessage, "Во время отправки сообщения произошла ошибка. Повторите позже.", "An error occurred while sending the message. Repeat later.");
+            this.Add(Constants.InvalidCode, "Неверный код", "Invalid code");
+            this.Add(Constants.RegistrationSubjectText, "Подтверждение регистрации", "Invalid code");
+            this.Add(Constants.RegistrationBodyText, @"<html><body><h2>Здравствуйте, {0}!</h2>
+                                                    <p>Для подтверждения регистрации введите разовый код или перейдите по ссылке<b><a href=""{1}"" target=""_blank"" > подтверждения регистрации</a></b>.</p>
+                                                    <p>Ваш разовый код: <b>{2}</b></p></body></html>", "");
+            this.Add(Constants.EnteredCodeIsIncorrectOrExpired, "Введенный код неверный или просроченный", "The entered code is incorrect or expired");
         }
     }
 }

@@ -70,7 +70,13 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 builder.Services.AddScoped<IAppUserService, AppUserService>();
 
-builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+builder.Services.AddScoped<IRegistrationService, LoginRegistrationService>();
+
+builder.Services.AddScoped<IRegistrationService, EmailRegistrationService>();
+
+builder.Services.AddScoped<IRegistrationServiceFactory, RegistrationServiceFactory>();
+
+builder.Services.AddScoped<IUserInfoService, UserInfoService>();
 
 builder.Services.AddTransient<IAuthorizationHandler, IsAuthenticationEnabledRequirementHandler>();
 

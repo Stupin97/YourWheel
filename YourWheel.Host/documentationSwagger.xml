@@ -44,6 +44,13 @@
             Контроллер для информации об аккаунте пользователя
             </summary>
         </member>
+        <member name="M:YourWheel.Host.Controllers.AccountController.GetUserInfo(System.Guid)">
+            <summary>
+            Поулчить данные пользователя
+            </summary>
+            <param name="userId">Идентификатор пользователя</param>
+            <returns>Данные пользователя</returns>
+        </member>
         <member name="T:YourWheel.Host.Controllers.AdminController">
             <summary>
             Конроллер для работы администратора
@@ -77,11 +84,17 @@
             </summary>
             <param name="userDto">Информация о пользователе</param>
         </member>
-        <member name="M:YourWheel.Host.Controllers.RegistrationController.RegistrationByPhoneAsync(YourWheel.Domain.Dto.UserDto)">
+        <member name="M:YourWheel.Host.Controllers.RegistrationController.ResponseAtRegistration(YourWheel.Domain.Dto.ResponseAtRegistrationDto)">
             <summary>
-            Регистрация через телефон
+            Ответ на сообщение - ручной ввод
             </summary>
-            <param name="userDto">Информация о пользователе</param>
+            <param name="responseAtRegistrationDto">Dto ответа содержащий потенциально отправленный код</param>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.RegistrationController.ResponseAtRegistrationLink(YourWheel.Domain.Dto.ResponseAtRegistrationDto)">
+            <summary>
+            Ответ на сообщение - переход по ссылке
+            </summary>
+            <param name="responseAtRegistrationDto">Dto ответа содержащий потенциально отправленный код</param>
         </member>
         <member name="T:YourWheel.Host.Extensions.ExceptionMiddlewareExtension">
             <summary>
@@ -151,6 +164,40 @@
             <param name="context">HttpContext</param>
             <param name="key">Запрашиваемый ключ</param>
             <returns>Строка со значением по ключу</returns>
+        </member>
+        <member name="T:YourWheel.Host.Logging.Log">
+            <summary>
+            Класс для работы с логами
+            </summary>
+        </member>
+        <member name="T:YourWheel.Host.Logging.Log.LogData">
+            <summary>
+            Instance записи
+            </summary>
+        </member>
+        <member name="P:YourWheel.Host.Logging.Log.LogData.Type">
+            <summary>
+            Тип записи
+            </summary>
+        </member>
+        <member name="P:YourWheel.Host.Logging.Log.LogData.Message">
+            <summary>
+            Тело сообщения лога
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Logging.Log.Info(System.String,System.Guid)">
+            <summary>
+            Запись информационного лога
+            </summary>
+            <param name="message">Тело сообщения</param>
+            <param name="userId">Идентификатор пользователя</param>
+        </member>
+        <member name="M:YourWheel.Host.Logging.Log.Error(System.String,System.Guid)">
+            <summary>
+            Запись ошибочного лога
+            </summary>
+            <param name="message">Тело сообщения</param>
+            <param name="userId">Идентификатор пользователя</param>
         </member>
         <member name="T:YourWheel.Host.Middlewares.ExceptionMiddleware">
             <summary>
@@ -289,6 +336,38 @@
             <param name="isRecursion">Рекурсивный вход</param>
             <returns></returns>
         </member>
+        <member name="T:YourWheel.Host.Services.Registration.HelperRegistrationService.RegistrationEnteredData">
+            <summary>
+            Данные отправленные для регистрации 
+            </summary>
+        </member>
+        <member name="P:YourWheel.Host.Services.Registration.HelperRegistrationService.RegistrationEnteredData.Code">
+            <summary>
+            Отправленный код
+            </summary>
+        </member>
+        <member name="P:YourWheel.Host.Services.Registration.HelperRegistrationService.RegistrationEnteredData.DateSent">
+            <summary>
+            Дата отправки кода
+            </summary>
+        </member>
+        <member name="F:YourWheel.Host.Services.Registration.HelperRegistrationService.RegistrationEnteredData.ExpirationDate">
+            <summary>
+            Срок годности кода
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.HelperRegistrationService.GetSixDigitCode(System.String)">
+            <summary>
+            Генерация 6-ти значного кода для пользователя
+            </summary>
+            <returns>6-ти значный код</returns>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.HelperRegistrationService.IsEteredCodeCorrect(System.String,System.String)">
+            <summary>
+            Корректность введеного кода
+            </summary>
+            <param name="enteredCode">Введенный код</param>
+        </member>
         <member name="T:YourWheel.Host.Services.Registration.IHelperRegistrationService">
             <summary>
             Hepler для сервиса регистрации
@@ -307,49 +386,90 @@
             </summary>
             <param name="keyValue">Активные регистируемые "значения"</param>
         </member>
-        <member name="M:YourWheel.Host.Services.Registration.IHelperRegistrationService.TryRegistration(System.String)">
+        <member name="M:YourWheel.Host.Services.Registration.IHelperRegistrationService.TryRegistration(YourWheel.Domain.Dto.UserDto)">
             <summary>
             Попытка регистрации (Добавление активной регистрации в случае успеха)
             </summary>
-            <param name="keyValue">Активные регистируемые "значения"</param>
+            <param name="userDto">Активные регистируемый пользователь</param>
             <returns>Одновременно регистируется пользователь - теущая попытка не первая</returns>
         </member>
-        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.IsAccountOccupiedByAnotherUser(System.String)">
+        <member name="M:YourWheel.Host.Services.Registration.IHelperRegistrationService.IsEteredCodeCorrect(System.String,System.String)">
             <summary>
-            Проверка на занятость аккаунта другим пользователем
+            Корректность введеного кода
             </summary>
-            <param name="login">телефон/логин/email</param>
-            <returns>Занят ли аккаунт другим пользователем</returns>
+            <param name="enteredCode">Введенный код</param>
+            <param name="login">Логин авторизовывающегося пользователя</param>
         </member>
-        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RegistrationUserAsync(YourWheel.Domain.Dto.UserDto)">
+        <member name="M:YourWheel.Host.Services.Registration.IHelperRegistrationService.GetRegisteredUser(System.String)">
+            <summary>
+            Получить регистрируемого пользователя
+            </summary>
+            <param name="login">Логин пользователя</param>
+            <returns>Введенныя информация пользователя</returns>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.TryRegistrationUserAsync(YourWheel.Domain.Dto.UserDto)">
             <summary>
             Попытка зарегистрировать пользователя
             </summary>
             <param name="userDto">Информация о пользователе</param>
         </member>
-        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RemoveRegistrationAttempt(System.String)">
+        <member name="P:YourWheel.Host.Services.Registration.IRegistrationService.RegistrationTypesBy">
+            <summary>
+            Тип регистрации
+            </summary>
+        </member>
+        <member name="T:YourWheel.Host.Services.Registration.IRegistrationServiceFactory">
+            <summary>
+            Фабрика для регистрации
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationServiceFactory.GetRegistrationService(YourWheel.Host.Services.Registration.HelperRegistrationService.RegistrationTypesBy)">
+            <summary>
+            Получить тип регистрации
+            </summary>
+            <param name="registrationTypesBy"></param>
+            <returns></returns>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationServiceFactory.IsValidUserData(YourWheel.Domain.Dto.UserDto,YourWheel.Domain.Dto.DetailsDto@)">
+            <summary>
+            Являются ли действительными пользовательские введенные данные
+            </summary>
+            <param name="userDto">Вводимые данные пользователем</param>
+            <param name="detailsDto">Детали валидации</param>
+            <returns>Валидны ли значения</returns>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationServiceFactory.IsAccountOccupiedByAnotherUser(YourWheel.Domain.Dto.UserDto)">
+            <summary>
+            Проверка на занятость аккаунта другим пользователем
+            </summary>
+            <param name="userDto">телефон/логин/email + данные</param>
+            <returns>Занят ли аккаунт другим пользователем</returns>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationServiceFactory.RegistrationUserAsync(YourWheel.Domain.Dto.UserDto)">
+            <summary>
+            Попытка зарегистрировать пользователя
+            </summary>
+            <param name="userDto">Информация о пользователе</param>
+        </member>
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationServiceFactory.RemoveRegistrationAttempt(System.String)">
             <summary>
             Удаление активной регистрации
             </summary>
             <param name="login">телефон/логин/email</param>
         </member>
-        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RegistrationByLoginAsync(YourWheel.Domain.Dto.UserDto)">
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationServiceFactory.IsEteredCodeCorrect(System.String,System.String)">
             <summary>
-            Регистрация через логин и пароль
+            Корректность введеного кода
             </summary>
-            <param name="userDto">Информация о пользователе</param>
+            <param name="enteredCode">Введенный код</param>
+            <param name="login">Логин авторизовывающегося пользователя</param>
         </member>
-        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RegistrationByPhoneAsync(YourWheel.Domain.Dto.UserDto)">
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationServiceFactory.GetRegisteredUser(System.String)">
             <summary>
-            Регистрация через телефон (https://smsc.ru/)
+            Получить регистрируемого пользователя
             </summary>
-            <param name="userDto">Информация о пользователе</param>
-        </member>
-        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.RegistrationByEmailAsync(YourWheel.Domain.Dto.UserDto)">
-            <summary>
-            Регистрация через почту
-            </summary>
-            <param name="userDto">Информация о пользователе</param>
+            <param name="login">Логин пользователя</param>
+            <returns>Введенныя информация пользователя</returns>
         </member>
         <member name="M:YourWheel.Host.Services.Senders.IEmailSender.SendEmailAsync(System.String,System.String,System.String)">
             <summary>

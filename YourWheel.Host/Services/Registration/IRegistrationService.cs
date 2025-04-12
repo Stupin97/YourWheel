@@ -10,7 +10,7 @@
         /// Попытка зарегистрировать пользователя
         /// </summary>
         /// <param name="userDto">Информация о пользователе</param>
-        ValueTask<bool> TryRegistrationUserAsync(UserDto userDto);
+        ValueTask<bool> TryRegistrationUserAsync(UserDto userDto, string urlHost);
 
         /// <summary>
         /// Тип регистрации

@@ -58,7 +58,7 @@
 
                     IRegistrationService service = this._registrationServiceFactory.GetRegistrationService(HelperRegistrationService.RegistrationTypesBy.Login);
 
-                    if (await service.TryRegistrationUserAsync(userDto))
+                    if (await service.TryRegistrationUserAsync(userDto, ""))
                         return await this.RegistrationAsync(userDto);
                 }
 
@@ -98,7 +98,13 @@
 
                 IRegistrationService service = this._registrationServiceFactory.GetRegistrationService(HelperRegistrationService.RegistrationTypesBy.Email);
 
-                if (await service.TryRegistrationUserAsync(userDto))
+                var scheme = this.Request.Scheme;
+
+                var host = this.Request.Host.Value;
+
+                var fullUrl = $"{scheme}://{host}";
+
+                if (await service.TryRegistrationUserAsync(userDto, fullUrl))
                 {
                     return Ok(new DetailsDto()
                     {

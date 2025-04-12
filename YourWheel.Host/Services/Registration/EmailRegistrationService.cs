@@ -17,14 +17,13 @@
             this._emailSender = emailSender;
         }
 
-        public async ValueTask<bool> TryRegistrationUserAsync(UserDto userDto)
+        public async ValueTask<bool> TryRegistrationUserAsync(UserDto userDto, string urlHost)
         {
             string name = userDto.Name ?? userDto.Surname ?? userDto.Login;
 
             string code = HelperRegistrationService.GetSixDigitCode(userDto.Login);
 
-            string url = ConfigurationHelper.Configuration.GetValue<string>("ASPNETCORE_URLS").Split(";").First() 
-                + $"/api/registration/response-at-registration-link?Code={code}&Login={userDto.Login}";
+            string url = urlHost + $"/api/registration/response-at-registration-link?Code={code}&Login={userDto.Login}";
 
             // Генерация кода
             string body = String.Format(this._objectTitlesService.GetTitleByTag(ObjectTitles.Constants.RegistrationBodyText,

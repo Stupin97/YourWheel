@@ -171,20 +171,29 @@ RETURNS TABLE (
 	Login VARCHAR (128),
 	Password VARCHAR (1024),
 	Phone VARCHAR (32),
-	Email VARCHAR (128),
-	RoleID uuid
+	RoleID uuid,
+	Email VARCHAR (128)
  )
  LANGUAGE plpgsql 
 AS $function$
 DECLARE
     v_user_id uuid;
 BEGIN
-    EXECUTE 'INSERT INTO User (Name, Surname, Login, Password, Phone, Email)
+    EXECUTE 'INSERT INTO "User" (Name, Surname, Login, Password, Phone, Email)
         VALUES ($1, $2, $3, $4, $5, $6)
 		RETURNING UserID' INTO v_user_id
 		USING p_name, p_surname, p_login, p_password, p_phone, p_email;
 
-	RETURN QUERY SELECT * FROM "User" a WHERE a.UserID = v_user_id;
+	RETURN QUERY SELECT 
+        a."userid",
+        a."name",
+        a."surname",
+        a."login",
+        a."password",
+        a."phone",
+		a."roleid",
+        a."email"
+    FROM "User" a WHERE a."userid" = v_user_id;
 END;
 $function$;
 

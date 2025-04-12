@@ -407,7 +407,7 @@
             <param name="login">Логин пользователя</param>
             <returns>Введенныя информация пользователя</returns>
         </member>
-        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.TryRegistrationUserAsync(YourWheel.Domain.Dto.UserDto)">
+        <member name="M:YourWheel.Host.Services.Registration.IRegistrationService.TryRegistrationUserAsync(YourWheel.Domain.Dto.UserDto,System.String)">
             <summary>
             Попытка зарегистрировать пользователя
             </summary>

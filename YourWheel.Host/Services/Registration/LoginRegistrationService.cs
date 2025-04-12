@@ -6,7 +6,7 @@
     {
         public HelperRegistrationService.RegistrationTypesBy RegistrationTypesBy => HelperRegistrationService.RegistrationTypesBy.Login;
 
-        public async ValueTask<bool> TryRegistrationUserAsync(UserDto userDto)
+        public async ValueTask<bool> TryRegistrationUserAsync(UserDto userDto, string urlHost)
         {
             // Логика для регистрации пуста, поскольку данные идут сразу на прямую на сохранение
             return true;

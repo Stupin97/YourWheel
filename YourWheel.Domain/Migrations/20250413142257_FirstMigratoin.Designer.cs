@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using YourWheel.Domain;
@@ -11,9 +12,11 @@ using YourWheel.Domain;
 namespace YourWheel.Domain.Migrations
 {
     [DbContext(typeof(YourWheelDbContext))]
-    partial class YourWheelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250413142257_FirstMigratoin")]
+    partial class FirstMigratoin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

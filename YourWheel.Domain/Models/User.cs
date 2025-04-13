@@ -23,4 +23,8 @@ public class User
     public Role Role { get; set; } = null!;
 
     public List<Car> Cars { get; set; } = new List<Car>();
+
+    public List<Master> Masters { get; set; } = new List<Master>();
+
+    public List<Order> Orders { get; set; } = new List<Order>();
 }

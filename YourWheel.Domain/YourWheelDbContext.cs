@@ -28,6 +28,28 @@ public class YourWheelDbContext : DbContext
 
     public DbSet<Car> Cars { get; set; }
 
+    public DbSet<Color> Colors { get; set; }
+
+    public DbSet<Fabricator> Fabricators { get; set; }
+
+    public DbSet<Master> Masters { get; set; }
+
+    public DbSet<Material> Materials { get; set; }
+
+    public DbSet<Order> Orders { get; set; }
+
+    public DbSet<PlaceOrder> PlaceOrders { get; set; }
+
+    public DbSet<Position> Positions { get; set; }
+
+    public DbSet<Status> Statuses { get; set; }
+
+    public DbSet<Supplier> Suppliers { get; set; }
+
+    public DbSet<TypeWork> TypeWorks { get; set; }
+
+    public DbSet<Work> Works { get; set; }
+
     /// <summary>
     /// Получение (Создание если отсутствует запись) AppUsers по userId пользователя
     /// </summary>

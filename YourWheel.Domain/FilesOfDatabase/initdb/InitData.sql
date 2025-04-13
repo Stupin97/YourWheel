@@ -88,7 +88,9 @@ CREATE OR REPLACE FUNCTION "User_Table_Fill_First_Data"()
         SELECT *
         FROM (VALUES
             ('Admin', 'Admin', 'Admin', 'F597BF08BFB93D5A684F92C47D5BAC4C01AA9754E2551B4C8AC8D5FE5822F997:141167C4495461B8C5A883B6B3343A3C:20000:SHA256',
-				(SELECT RoleID FROM "Role" WHERE Name = 'Admin'))
+				(SELECT RoleID FROM "Role" WHERE Name = 'Admin')),
+			('Дмитрий', 'Прокин', 'Master', 'F597BF08BFB93D5A684F92C47D5BAC4C01AA9754E2551B4C8AC8D5FE5822F997:141167C4495461B8C5A883B6B3343A3C:20000:SHA256',
+				(SELECT RoleID FROM "Role" WHERE Name = 'Master'))
         ) AS t(name, surname, login, password, roleid)
     LOOP
 		CALL "Insert_Into_User"(rec.name, rec.surname, rec.login, rec.password, rec.roleid);
@@ -197,6 +199,202 @@ BEGIN
 END;
 $function$;
 
+CREATE OR REPLACE PROCEDURE "Status_Table_Fill_Data" ()
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+AS $procedure$
+ DECLARE rec RECORD;
+ BEGIN
+	DELETE FROM "Status";
+ 
+	FOR rec IN
+        SELECT *
+        FROM (VALUES
+            	('Создан'),
+				('Принят в работу'),
+				('Готов к выдаче'),
+				('Завершен'),
+				('Отменен')
+        ) AS t(name)
+    LOOP
+	INSERT INTO "Status" (Name)
+		VALUES (rec.Name);
+    END LOOP;
+ END;
+$procedure$;
+
+CREATE OR REPLACE PROCEDURE "Supplier_Table_Fill_Data" ()
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+AS $procedure$
+ DECLARE rec RECORD;
+ BEGIN
+	DELETE FROM "Supplier";
+ 
+	FOR rec IN
+        SELECT *
+        FROM (VALUES
+            	('Поставщик кожи 1', '89999001111', 'https://www.shymka.ru/'),
+				('Поставщик кожи 2', '89999002222', 'https://www.mleather.ru/'),
+				('Поставщик кожи 3', '89999003333', '')
+        ) AS t(name, phone, url)
+    LOOP
+	INSERT INTO "Supplier" (Name, Phone, Url)
+		VALUES (rec.Name, rec.Phone, rec.Url);
+    END LOOP;
+ END;
+$procedure$;
+
+CREATE OR REPLACE PROCEDURE "Fabricator_Table_Fill_Data" ()
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+AS $procedure$
+ DECLARE rec RECORD;
+ BEGIN
+	DELETE FROM "Fabricator";
+ 
+	FOR rec IN
+        SELECT *
+        FROM (VALUES
+            	('Фабрика', 'Китай'),
+				('', 'Италия'),
+				('', 'Италия'),
+				('', 'Россия'),
+				('', 'Беларусь')
+        ) AS t(name, country)
+    LOOP
+	INSERT INTO "Fabricator" (Name, Country)
+		VALUES (rec.Name, rec.Country);
+    END LOOP;
+ END;
+$procedure$;
+
+CREATE OR REPLACE PROCEDURE "Material_Table_Fill_Data" ()
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+AS $procedure$
+ DECLARE rec RECORD;
+ BEGIN
+	DELETE FROM "Material";
+ 
+	FOR rec IN
+        SELECT *
+        FROM (VALUES
+            	('Экокожа на микрофибре ДЛЯ РУЛЯ Швайцер Мерседес с перфорацией 0500 BLACK толщина 1,5мм шир.1,35м', 6000,
+					(SELECT SupplierID FROM "Supplier" WHERE Name = 'Поставщик кожи 1' LIMIT 1),
+					(SELECT FabricatorID FROM "Fabricator" WHERE Country = 'Италия' LIMIT 1),
+					(SELECT ColorID FROM "Color" WHERE Name = 'Черный' LIMIT 1)),
+				('Экокожа на микрофибре ДЛЯ РУЛЯ Швайцер Наппа 0500 JET BLACK толщина 1,55мм ширина 1,35м', 7000,
+					(SELECT SupplierID FROM "Supplier" WHERE Name = 'Поставщик кожи 2' LIMIT 1),
+					(SELECT FabricatorID FROM "Fabricator" WHERE Country = 'Китай' LIMIT 1),
+					(SELECT ColorID FROM "Color" WHERE Name = 'Черный' LIMIT 1)),
+				('Экокожа на микрофибре ДЛЯ РУЛЯ Nappa SW-N 8014 КОРИЧНЕВАЯ толщина 1,5мм ширина 1,4м', 5000,
+					(SELECT SupplierID FROM "Supplier" WHERE Name = 'Поставщик кожи 3' LIMIT 1),
+					(SELECT FabricatorID FROM "Fabricator" WHERE Country = 'Россия' LIMIT 1),
+					(SELECT ColorID FROM "Color" WHERE Name = 'Коричневый' LIMIT 1))
+        ) AS t(name, price, supplierid, fabricatorid, colorid)
+    LOOP
+	INSERT INTO "Material" (Name, Price, SupplierID, FabricatorID, ColorID)
+		VALUES (rec.Name, rec.Price, rec.SupplierID, rec.FabricatorID, rec.ColorID);
+    END LOOP;
+ END;
+$procedure$;
+
+CREATE OR REPLACE PROCEDURE "Color_Table_Fill_Data" ()
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+AS $procedure$
+ DECLARE rec RECORD;
+ BEGIN
+	DELETE FROM "Color";
+ 
+	FOR rec IN
+        SELECT *
+        FROM (VALUES
+            	('Черный'),
+				('Коричневый'),
+				('Молочный'),
+				('Темно-синий'),
+				('Орех')
+        ) AS t(name)
+    LOOP
+	INSERT INTO "Color" (Name)
+		VALUES (rec.Name);
+    END LOOP;
+ END;
+$procedure$;
+
+CREATE OR REPLACE PROCEDURE "Position_Table_Fill_Data" ()
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+AS $procedure$
+ DECLARE rec RECORD;
+ BEGIN
+	DELETE FROM "Position";
+ 
+	FOR rec IN
+        SELECT *
+        FROM (VALUES
+				('Мастер по перетяжке рулей и салонов'),
+            	('Мастер по перетяжке рулей'),
+				('Мастер по перетяжке салонов')
+        ) AS t(name)
+    LOOP
+	INSERT INTO "Position" (Name)
+		VALUES (rec.Name);
+    END LOOP;
+ END;
+$procedure$;
+
+CREATE OR REPLACE PROCEDURE "TypeWork_Table_Fill_Data" ()
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+AS $procedure$
+ DECLARE rec RECORD;
+ BEGIN
+	DELETE FROM "TypeWork";
+ 
+	FOR rec IN
+        SELECT *
+        FROM (VALUES
+            	('Перетяжка руля эко кожей без подогрева', 7000),
+				('Перетяжка руля эко кожей с подогревом', 10000),
+				('Перетяжка руля натуральной кожей без подогрева', 9000),
+				('Перетяжка руля натуральной кожей с подогревом', 12000),
+				('Перетяжка карты двери эко кожей', 7000),
+				('Перетяжка карты двери натуральной кожей', 9000)
+        ) AS t(name, price)
+    LOOP
+	INSERT INTO "TypeWork" (Name, Price)
+		VALUES (rec.Name, rec.Price);
+    END LOOP;
+ END;
+$procedure$;
+
+CREATE OR REPLACE PROCEDURE "Master_Table_Fill_Data" ()
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+AS $procedure$
+ DECLARE rec RECORD;
+ BEGIN
+	DELETE FROM "Master";
+ 
+	FOR rec IN
+        SELECT *
+        FROM (VALUES
+            	((SELECT UserID FROM "User" WHERE Login = 'Master' LIMIT 1), '2023-04-27 15:30:00+04'::TIMESTAMPTZ,
+					(SELECT PositionID FROM "Position" WHERE Name = 'Мастер по перетяжке рулей и салонов' LIMIT 1))
+        ) AS t(userid, workexperiencedate, positionid)
+    LOOP
+	INSERT INTO "Master" (UserID, WorkExperienceDate, PositionID)
+		VALUES (rec.UserID, rec.WorkExperienceDate, rec.PositionID);
+    END LOOP;
+ END;
+$procedure$;
+
+
+
+
 CREATE OR REPLACE PROCEDURE "InitData" ()
  LANGUAGE plpgsql
  SECURITY DEFINER
@@ -207,7 +405,14 @@ BEGIN
 	CALL "Role_Table_Fill_Data"();
 	CALL "Language_Table_Fill_Data"();
 	PERFORM "User_Table_Fill_First_Data"();
-	
+	CALL "Status_Table_Fill_Data"();
+	CALL "Supplier_Table_Fill_Data"();
+	CALL "Fabricator_Table_Fill_Data"();
+	CALL "Color_Table_Fill_Data"();
+	CALL "Material_Table_Fill_Data"();
+	CALL "TypeWork_Table_Fill_Data"();
+	CALL "Position_Table_Fill_Data"();
+	CALL "Master_Table_Fill_Data"();
 END;
 $procedure$;
 

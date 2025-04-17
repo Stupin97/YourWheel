@@ -210,15 +210,16 @@ AS $procedure$
 	FOR rec IN
         SELECT *
         FROM (VALUES
-            	('Создан'),
-				('Принят в работу'),
-				('Готов к выдаче'),
-				('Завершен'),
-				('Отменен')
-        ) AS t(name)
+				('21e4bd82-89ea-48c1-8923-4fd9b3df7a17'::uuid, 'Активный черновик'),
+            	('c250e52a-e334-4064-b35b-9f08c89f8deb'::uuid, 'Создан'),
+				('2b125e13-32d4-4e9a-9fe3-88d3d98a5602'::uuid, 'Принят в работу'),
+				('240a277c-ba14-44bc-bbdd-fba7f5f7bc9d'::uuid, 'Готов к выдаче'),
+				('72239594-28a1-4be3-8b91-e633206c1178'::uuid, 'Завершен'),
+				('aba36d1c-d0e7-4185-958b-bd0f65394122'::uuid, 'Отменен')
+        ) AS t(statusid, name)
     LOOP
-	INSERT INTO "Status" (Name)
-		VALUES (rec.Name);
+	INSERT INTO "Status" (StatusID, Name)
+		VALUES (rec.StatusID, rec.Name);
     END LOOP;
  END;
 $procedure$;

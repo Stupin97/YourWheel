@@ -38,9 +38,9 @@
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync(string login, string password)
+        public async Task<IActionResult> LoginAsync([FromBody] UserCredentialsDto userCredentialsDto)
         {
-            ClaimsIdentity userClaimsIdentity = await this._authenticationService.GetIdentityAsync(login, password);
+            ClaimsIdentity userClaimsIdentity = await this._authenticationService.GetIdentityAsync(userCredentialsDto.Login, userCredentialsDto.Password);
 
             if (userClaimsIdentity == null)
                 return BadRequest(new DetailsDto { Details = this._objectTitlesService.GetTitleByTag(ObjectTitles.Constants.TextErrorLoginOrPassword, Guid.Parse(ObjectTitles.Constants.RussianLanguageGuid)) });
@@ -71,7 +71,7 @@
         ///   Выход
         /// </summary>
         [Authorize]
-        [HttpGet("logout")]
+        [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
             var token = this.HttpContext.ReadToken();

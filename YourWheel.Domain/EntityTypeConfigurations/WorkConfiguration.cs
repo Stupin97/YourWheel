@@ -27,8 +27,6 @@
 
             builder.Property(e => e.Price).HasColumnName("price");
 
-            builder.Property(e => e.ProductId).HasColumnName("productid");
-
             builder.Property(e => e.TypeWorkId).HasColumnName("typeworkid");
 
             builder.Property(e => e.WorkPlaceId).HasColumnName("workplaceid");

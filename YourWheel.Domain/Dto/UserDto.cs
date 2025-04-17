@@ -1,4 +1,6 @@
-﻿namespace YourWheel.Domain.Dto
+﻿using YourWheel.Domain.Models;
+
+namespace YourWheel.Domain.Dto
 {
     /// <summary>
     /// Dto для клиента
@@ -17,8 +19,8 @@
 
         public string? Phone { get; set; }
 
-        public Guid RoleId { get; set; }
-
         public string? Email { get; set; }
+
+        public RoleDto Role { get; set; } = null!;
     }
 }

@@ -56,12 +56,6 @@
             Конроллер для работы администратора
             </summary>
         </member>
-        <member name="M:YourWheel.Host.Controllers.AdminController.GetCountUsersAsync">
-            <summary>
-            Временный метод действия
-            </summary>
-            <returns></returns>
-        </member>
         <member name="T:YourWheel.Host.Controllers.AuthController">
             <summary>
             Контроллер для аутентификации пользователя
@@ -71,6 +65,93 @@
             <summary>
               Выход
             </summary>
+        </member>
+        <member name="T:YourWheel.Host.Controllers.OrderController">
+            <summary>
+            Контроллер для работы с заказами + работами
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.AddWorkToOrderAsync(YourWheel.Domain.Dto.Orders.CreatedWorkByUserDto)">
+            <summary>
+            Добавить работу в заказ
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.GetAllMaterialAsync">
+            <summary>
+            Получить все материалы кож
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.GetTypeWorksAsync">
+            <summary>
+            Получить все типы работы
+            </summary>
+            <returns>Все типы работы</returns>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.GetShortOrderAsync(System.Guid)">
+            <summary>
+            Получить заказ для пользователя
+            </summary>
+            <param name="orderId">Идентификатор заказа</param>
+            <returns>Заказ для пользователя</returns>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.GetAllOrdersAsync">
+            <summary>
+            Получить все заказы пользователя
+            </summary>
+            <returns>Все заказы пользователя</returns>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.GetAllOrdersByStatusAsync(System.Guid)">
+            <summary>
+            Получить все заказы пользователя по статусу заказа
+            </summary>
+            <param name="statusId">Статус заказа</param>
+            <returns>Все заказы пользователя по статусу заказа</returns>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.GetOrdersAsync(System.Int32,System.Int32)">
+            <summary>
+            Получить заказы пользователя 
+            </summary>
+            <param name="count">Количество возращаемых элементов</param>
+            <param name="offset">Страница</param>
+            <returns>Заказы пользователя</returns>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.GetWorkAsync(System.Guid)">
+            <summary>
+            Получить работу для заказа
+            </summary>
+            <param name="workId">Идентификатор работы</param>
+            <returns>Dto работы</returns>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.RemoveWorkFromOrderAsync(System.Guid,System.Guid)">
+            <summary>
+            Удалить работу из заказа
+            </summary>
+            <param name="orderId">Идентификатор заказа</param>
+            <param name="workId">Удаляемый идентификатор работы из заказа</param>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.GetAllWorksForOrderAsync(System.Guid)">
+            <summary>
+            Получить все работы для заказа
+            </summary>
+            <param name="orderId">Идентификатор заказа</param>
+            <returns>Все работы для заказа</returns>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.ConfirmOrderAsync">
+            <summary>
+            Подтвердить заказ
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.CancelOrderAsync(System.Guid)">
+            <summary>
+            Отменить заказ
+            </summary>
+            <param name="orderId">Идентификатор заказа</param>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.OrderController.GetUserInfo">
+            <summary>
+            Получить UserDto
+            </summary>
+            <returns>userDto</returns>
         </member>
         <member name="M:YourWheel.Host.Controllers.RegistrationController.RegistrationByLoginAsync(YourWheel.Domain.Dto.UserDto)">
             <summary>
@@ -95,6 +176,31 @@
             Ответ на сообщение - переход по ссылке
             </summary>
             <param name="responseAtRegistrationDto">Dto ответа содержащий потенциально отправленный код</param>
+        </member>
+        <member name="T:YourWheel.Host.Controllers.ServiceController">
+            <summary>
+            Контроллер для "ассортимента"
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.ServiceController.GetAllMaterialsAsync">
+            <summary>
+            Получить все материалы кож
+            </summary>
+            <returns>Dсе материалы кож</returns>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.ServiceController.GetAllMaterialByColorsAndFabricatorsAsync(System.Guid[],System.Guid[])">
+            <summary>
+            Получить все материалы конерктных цветов и изготовителей
+            </summary>
+            <param name="colorIds">Список фильтруемых цветов</param>
+            <param name="fabricatorIds">Список фильтруемых изготовителей</param>
+            <returns>Все материалы конерктных цветов и изготовителей </returns>
+        </member>
+        <member name="M:YourWheel.Host.Controllers.ServiceController.GetTypeWorksAsync">
+            <summary>
+            Получить все типы работы
+            </summary>
+            <returns>Все типы работы</returns>
         </member>
         <member name="T:YourWheel.Host.Extensions.ExceptionMiddlewareExtension">
             <summary>
@@ -164,6 +270,13 @@
             <param name="context">HttpContext</param>
             <param name="key">Запрашиваемый ключ</param>
             <returns>Строка со значением по ключу</returns>
+        </member>
+        <member name="M:YourWheel.Host.Extensions.IdentityExtensions.GetUserId(System.Security.Principal.IIdentity)">
+            <summary>
+            Получить UserId из claims
+            </summary>
+            <param name="identity"></param>
+            <returns></returns>
         </member>
         <member name="T:YourWheel.Host.Logging.Log">
             <summary>

@@ -78,6 +78,10 @@ builder.Services.AddScoped<IRegistrationServiceFactory, RegistrationServiceFacto
 
 builder.Services.AddScoped<IUserInfoService, UserInfoService>();
 
+builder.Services.AddScoped<IOrderService, OrderService>();
+
+builder.Services.AddScoped<IServiceService, ServiceService>();
+
 builder.Services.AddTransient<IAuthorizationHandler, IsAuthenticationEnabledRequirementHandler>();
 
 builder.Services.AddTransient<IAuthorizationHandler, IsAdminRequirementHandler>();

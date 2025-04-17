@@ -79,7 +79,7 @@
         /// </summary>
         /// <param name="userDto">Информация о пользователе</param>
         [HttpPost("registration-by-email")]
-        public async Task<IActionResult> RegistrationByEmailAsync(UserDto userDto)
+        public async Task<IActionResult> RegistrationByEmailAsync([FromBody] UserDto userDto)
         {
             userDto.Login = userDto.Email;
 

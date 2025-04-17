@@ -18,20 +18,5 @@ namespace YourWheel.Host.Controllers
         {
             this._objectTitlesServicel = objectTitlesService;
         }
-
-        /// <summary>
-        /// Временный метод действия
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("get-count-users")]
-
-        public async Task<ActionResult<List<string>>> GetCountUsersAsync()
-        {
-            return Ok(new List<string>()
-            {
-                ConfigurationHelper.Configuration.GetValue<string>("DB_CONNECTION_STRING_POSTGRES"),
-                Environment.GetEnvironmentVariable("DB_CONNECTION_STRING_POSTGRES")
-            });
-        }
     }
 }

@@ -6,8 +6,6 @@
 
         public Guid OrderId { get; set; }
 
-        public Guid? ProductId { get; set; }
-
         public Guid? TypeWorkId { get; set; }
 
         public Guid? MaterialId { get; set; }

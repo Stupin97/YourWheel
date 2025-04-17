@@ -14,5 +14,12 @@ namespace YourWheel.Domain.Services
         /// <param name="userId"></param>
         /// <returns></returns>
         Task<UserDto> GetUserInfo(Guid userId);
+
+        /// <summary>
+        /// Получить пользователя по Id
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя</param>
+        /// <returns>Пользователь</returns>
+        Task<UserDto> GetUserByIdAsync(Guid userId);
     }
 }

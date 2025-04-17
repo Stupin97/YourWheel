@@ -26,7 +26,7 @@
 
         public Order? Major { get; set; }
 
-        public PlaceOrder? Placeorder { get; set; }
+        public PlaceOrder? PlaceOrder { get; set; }
 
         public Status Status { get; set; } = null!;
 

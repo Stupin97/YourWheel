@@ -46,7 +46,7 @@
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_major_order");
 
-            builder.HasOne(d => d.Placeorder).WithMany(p => p.Orders)
+            builder.HasOne(d => d.PlaceOrder).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.PlaceOrderId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("fk_placeorder_order");

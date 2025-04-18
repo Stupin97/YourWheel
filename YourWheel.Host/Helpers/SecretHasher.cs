@@ -9,7 +9,7 @@ namespace YourWheel.Host.Helpers
 
         private const int _keySize = 32; // 256 bits
 
-        private static readonly int _iterations = ConfigurationHelper.Configuration.GetValue<int>("SecretHasherIteration");
+        private static readonly int _iterations = ConfigurationHelper.Configuration?.GetValue<int>("SecretHasherIteration") ?? 20000;
 
         private static readonly HashAlgorithmName _algorithm = HashAlgorithmName.SHA256;
 

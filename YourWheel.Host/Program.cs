@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
-
+using StackExchange.Redis;
 using YourWheel.Domain;
 using YourWheel.Domain.Services;
 using YourWheel.Host;
@@ -33,6 +34,12 @@ builder.Services.AddDbContext<YourWheelDbContext>(options =>
         ConfigurationHelper.Configuration.GetValue<string>("DB_CONNECTION_STRING_POSTGRES") 
         ?? Environment.GetEnvironmentVariable("DB_CONNECTION_STRING_POSTGRES"))
     );
+
+builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = ConfigurationHelper.Configuration.GetValue<string>("RedisCacheOptions:Configuration");
+        options.InstanceName = ConfigurationHelper.Configuration.GetValue<string>("RedisCacheOptions:InstanceName");
+    });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -63,6 +70,9 @@ builder.Services.AddSingleton<IObjectTitlesService>(c =>
 builder.Services.AddSingleton<IAuthenticationSettings>(authSettings);
 
 builder.Services.AddSingleton<IHelperRegistrationService, HelperRegistrationService>();
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
+            ConnectionMultiplexer.Connect(ConfigurationHelper.Configuration.GetValue<string>("RedisCacheOptions:Configuration")));
 
 builder.Services.AddScoped<IJwtService, JwtService>();
 

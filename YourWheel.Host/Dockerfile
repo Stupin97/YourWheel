@@ -23,6 +23,8 @@ RUN dotnet publish YourWheel.Host/YourWheel.Host.csproj -c Release -o /app/publi
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y redis-tools
+
 # /app/publish/YourWheel.Host.dll
 COPY --from=build /app/publish .
 

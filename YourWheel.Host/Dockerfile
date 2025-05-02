@@ -4,6 +4,7 @@ WORKDIR /src
 COPY YourWheel.Host/YourWheel.Host.csproj YourWheel.Host/
 COPY YourWheel.Domain/YourWheel.Domain.csproj YourWheel.Domain/
 COPY ObjectTitles/ObjectTitles.csproj ObjectTitles/
+COPY RabbitMqConfiguration/RabbitMqConfiguration.csproj RabbitMqConfiguration/
 
 #/src/.nuget
 RUN dotnet restore YourWheel.Host/YourWheel.Host.csproj --source https://api.nuget.org/v3/index.json

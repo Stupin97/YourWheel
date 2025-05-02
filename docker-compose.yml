@@ -25,6 +25,17 @@ services:
     networks:
       - default
 
+  #rabbitmq:
+  #    image: rabbitmq:3.9-management
+  #    container_name: rabbitmq
+  #    ports:
+  #      - "5672:5672" # AMQP Protocol
+  #      - "15672:15672" # Management UI
+  #    env_file:
+  #      - ./ReceiveRabbitMQ/.env
+  #   networks:
+  #      - default
+
   your-wheel:
     container_name: your-wheel
     build:

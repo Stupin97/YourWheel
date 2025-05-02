@@ -449,6 +449,19 @@
             <param name="isRecursion">Рекурсивный вход</param>
             <returns></returns>
         </member>
+        <member name="T:YourWheel.Host.Services.RabbitMQ.EmailService.IEmailSender">
+            <summary>
+            Сервис для отправки email через RabbitMQ
+            </summary>
+        </member>
+        <member name="M:YourWheel.Host.Services.RabbitMQ.EmailService.IEmailSender.SendEmailAsync(System.String,System.String,System.String)">
+            <summary>
+            Отправка сообщения через RabbitMQ
+            </summary>
+            <param name="toEmail"></param>
+            <param name="subject"></param>
+            <param name="body"></param>
+        </member>
         <member name="T:YourWheel.Host.Services.Registration.HelperRegistrationService.RegistrationEnteredData">
             <summary>
             Данные отправленные для регистрации 
@@ -583,14 +596,6 @@
             </summary>
             <param name="login">Логин пользователя</param>
             <returns>Введенныя информация пользователя</returns>
-        </member>
-        <member name="M:YourWheel.Host.Services.Senders.IEmailSender.SendEmailAsync(System.String,System.String,System.String)">
-            <summary>
-            Отправка письма
-            </summary>
-            <param name="toEmail">Получатель</param>
-            <param name="subject">Тема</param>
-            <param name="body">Тело письма</param>
         </member>
     </members>
 </doc>

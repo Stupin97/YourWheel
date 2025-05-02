@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
+
 using YourWheel.Domain;
 using YourWheel.Domain.Services;
 using YourWheel.Host;
@@ -14,7 +14,6 @@ using YourWheel.Host.AuthorizationPolitics;
 using YourWheel.Host.Extensions;
 using YourWheel.Host.Services;
 using YourWheel.Host.Services.Registration;
-using YourWheel.Host.Services.Senders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -96,7 +95,7 @@ builder.Services.AddTransient<IAuthorizationHandler, IsAuthenticationEnabledRequ
 
 builder.Services.AddTransient<IAuthorizationHandler, IsAdminRequirementHandler>();
 
-builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddTransient<YourWheel.Host.Services.RabbitMQ.EmailService.IEmailSender, YourWheel.Host.Services.RabbitMQ.EmailService.EmailSender>();
 
 builder.Services.AddSwaggerGen(c =>
 {

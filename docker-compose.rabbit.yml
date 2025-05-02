@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.9-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" # AMQP Protocol
+      - "15672:15672" # Management UI
+    env_file:
+      - ./ReceiveRabbitMQ/.env
+    networks:
+      - default
+
+  receive-rabbit:
+    container_name: receive-rabbit
+    build:
+      context: .
+      dockerfile: ./ReceiveRabbitMQ/Dockerfile
+    depends_on:
+      - rabbitmq
+    env_file:
+      - ./ReceiveRabbitMQ/.env

@@ -6,11 +6,11 @@
     {
         private readonly IObjectTitlesService _objectTitlesService;
 
-        private readonly YourWheel.Host.Services.Senders.IEmailSender _emailSender;
+        private readonly RabbitMQ.EmailService.IEmailSender _emailSender;
 
         public HelperRegistrationService.RegistrationTypesBy RegistrationTypesBy => HelperRegistrationService.RegistrationTypesBy.Email;
 
-        public EmailRegistrationService(IObjectTitlesService objectTitlesService, YourWheel.Host.Services.Senders.IEmailSender emailSender)
+        public EmailRegistrationService(IObjectTitlesService objectTitlesService, RabbitMQ.EmailService.IEmailSender emailSender)
         {
             this._objectTitlesService = objectTitlesService;
 

@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "..\UnitTests\U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "..\IntegrationTests\IntegrationTests.csproj", "{9D7D55ED-0B9E-48B3-B567-0AA944F14A4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReceiveRabbitMQ", "..\ReceiveRabbitMQ\ReceiveRabbitMQ.csproj", "{C416178A-B89F-406C-AC8A-61C25DE13995}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReceiveRabbitMQ", "..\ReceiveRabbitMQ\ReceiveRabbitMQ.csproj", "{C416178A-B89F-406C-AC8A-61C25DE13995}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqConfiguration", "..\RabbitMqConfiguration\RabbitMqConfiguration.csproj", "{CF07D264-8401-4ADB-A716-564CF4B8B0AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMqConfiguration", "..\RabbitMqConfiguration\RabbitMqConfiguration.csproj", "{CF07D264-8401-4ADB-A716-564CF4B8B0AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

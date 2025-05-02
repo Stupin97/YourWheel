@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: psql-client-test
+  namespace: yourwheel-dev
+spec:
+  containers:
+  - name: psql-client-test
+    image: postgres:16
+    command: ["sleep", "infinity"]

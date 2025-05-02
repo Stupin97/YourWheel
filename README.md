@@ -1,6 +1,6 @@
 # Подготовка к запуску
 	- cmd: git clone https://github.com/Stupin97/YourWheel.git в созданную директорию, например YourWheel (далее корня репозитория == YourWheel)
-	- Запросить у меня файл .env - расположить в YourWheel.Host
+	- Запросить у меня файлы .env - расположить в YourWheel.Host и ReceiveRabbitMQ
 	- Проверить файл DockerEntrypoint.sh ! дожен быть формат LF (не CRLF) !
 #
 
@@ -16,6 +16,13 @@
 # Развертывание docker контейнера для окружения (для работы необходим https сертификат)
 
 	- Запустить консоль из корня репозитория (YourWheel)
+	- Выполнить: docker-compose -f docker-compose.rabbit.yml up --build 
 	- Выполнить: docker-compose -f docker-compose.yml up --build 
 	- Сервер слушает по адресу: https://localhost:5001/
 	- Swagger: https://localhost:5001/swagger/index.html
+
+
+
+
+kubectl apply -f namespace.yaml
+kubectl apply -k ./postgresql -n yourwheel-dev

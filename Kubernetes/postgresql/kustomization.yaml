@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: yourwheel-dev
+configMapGenerator:
+- name: postgresql-config
+  envs:
+  - ./envs/postgresql-config.env
+secretGenerator:
+- name: postgresql-secret
+  envs:
+  - ./envs/postgresql-secret.env
+resources:
+  - postgresql-pvc.yaml
+  - postgresql-deployment.yaml
+  - postgresql-service.yaml

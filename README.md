@@ -26,3 +26,11 @@
 
 kubectl apply -f namespace.yaml
 kubectl apply -k ./postgresql -n yourwheel-dev
+kubectl apply -k ./redis -n yourwheel-dev
+kubectl apply -k ./rabbitmq -n yourwheel-dev
+
+
+Для локальной работы выполнить:
+kubectl port-forward pod/redis-XXX 6379:6379 -n yourwheel-dev
+kubectl port-forward pod/rabbitmq-XXX 5672:5672 15672:15672 -n yourwheel-dev
+

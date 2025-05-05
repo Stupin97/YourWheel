@@ -17,7 +17,10 @@ using YourWheel.Host.Services.Registration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Env.Load();
+if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+{
+    Env.Load();
+}
 
 builder.Configuration.AddEnvironmentVariables();
 

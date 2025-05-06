@@ -4,7 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using ReceiveRabbitMQ;
 using ReceiveRabbitMQ.Senders;
 
-Env.Load();
+// Для локальной работы вернуть
+//Env.Load();
 
 IConfigurationRoot configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")

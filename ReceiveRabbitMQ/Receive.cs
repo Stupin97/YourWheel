@@ -132,7 +132,7 @@ namespace ReceiveRabbitMQ
                     }
                     catch (Exception exception) 
                     {
-                        Console.WriteLine($"Could not create RabbitMQ Try: {indexTry} connection; {exception.Message}");
+                        Console.WriteLine($"Could not create RabbitMQ Try: {indexTry} connection; {exception.Message}; HostName: {this._hostName}");
 
                         if (indexTry < 3)
                         {

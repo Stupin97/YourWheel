@@ -19,7 +19,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
 {
-    Env.Load();
+    // Для локальное работы
+    //Env.Load();
 }
 
 builder.Configuration.AddEnvironmentVariables();
@@ -134,6 +135,8 @@ if (!app.Environment.IsDevelopment())
     // Когда буду разворачивать - настроить
     app.UseHsts();
 }
+
+app.MapGet("/healthz", () => Results.Ok());
 
 app.UseSwagger();
 

@@ -1,0 +1,149 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: your-wheel
+  namespace: yourwheel-dev
+  labels:
+    app: your-wheel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: your-wheel
+  template:
+    metadata:
+      labels:
+        app: your-wheel
+    spec:
+      containers:
+        - name: your-wheel
+          image: stupin97/your-wheel:1.0.2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+              name: http
+            - containerPort: 443
+              name: https
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Development"
+            - name: ASPNETCORE_URLS
+              value: "https://+;http://+"
+            - name: ASPNETCORE_HTTPS_PORT
+              value: "5001"
+            - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+              value: "pass1111"
+            - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+              value: "/app/certificates/aspnetapp.pfx"
+            - name: DB_CONNECTION_STRING_POSTGRES
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: DB_CONNECTION_STRING_POSTGRES
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: POSTGRES_DB
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: DB_HOST
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: POSTGRES_USER
+            - name: JWT_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: JWT_KEY
+            - name: JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: JWT_ISSUER
+            - name: JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: JWT_AUDIENCE
+            - name: JWT_LIFETIME
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: JWT_LIFETIME
+            - name: EmailSettings__Host
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: EmailSettings__Host
+            - name: EmailSettings__Port
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: EmailSettings__Port
+            - name: EmailSettings__Username
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: EmailSettings__Username
+            - name: EmailSettings__AppPassword
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: EmailSettings__AppPassword
+            - name: RedisCacheOptions__Configuration
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: RedisCacheOptions__Configuration
+            - name: RedisCacheOptions__InstanceName
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: RedisCacheOptions__InstanceName
+            - name: RabbitMQ__HostName
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: RabbitMQ__HostName
+            - name: RabbitMQ__QueueName
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: RabbitMQ__QueueName
+            - name: RabbitMQ__ExchangeName
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: RabbitMQ__ExchangeName
+            - name: RabbitMQ__DefaultUser
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: RabbitMQ__DefaultUser
+            - name: RabbitMQ__DefaultPass
+              valueFrom:
+                configMapKeyRef:
+                  name: your-wheel-config
+                  key: RabbitMQ__DefaultPass
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 10

@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: yourwheel-dev
+configMapGenerator:
+- name: your-wheel-config
+  envs:
+  - your-wheel-config.env
+resources:
+  - your-wheel-deployment.yaml
+  - your-wheel-service.yaml
